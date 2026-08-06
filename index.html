@@ -155,6 +155,85 @@ footer{background:#0e1018;padding:4rem 0 2rem;border-top:1px solid rgba(236,231,
 .foot-logo{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:600;color:var(--kori);margin-bottom:.8rem}
 .foot-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding-top:2rem;border-top:1px solid rgba(236,231,219,.07);color:var(--muted);font-size:.8rem}
 
+/* ——— Корзина ——— */
+.cart-fab{position:fixed;right:1.6rem;bottom:1.6rem;z-index:70;display:none;align-items:center;gap:.65rem;
+  padding:.85rem 1.4rem .85rem 1.1rem;border:0;border-radius:999px;background:var(--shu);color:#fff;
+  font-family:inherit;font-size:.9rem;font-weight:600;cursor:pointer;
+  box-shadow:0 18px 44px -16px rgba(224,101,59,.9);transition:background .3s,transform .3s var(--ease)}
+.cart-fab.show{display:flex}
+.cart-fab:hover{background:var(--shu-soft);transform:translateY(-2px)}
+.cart-fab .mark{font-family:'Noto Serif JP',serif;font-size:1.1rem;line-height:1}
+.cart-fab .cnt{background:rgba(0,0,0,.28);border-radius:999px;padding:.05rem .5rem;font-size:.78rem}
+.cart-fab.bump{animation:bump .45s var(--ease)}
+@keyframes bump{0%{transform:scale(1)}40%{transform:scale(1.12)}100%{transform:scale(1)}}
+
+.cart-scrim{position:fixed;inset:0;z-index:80;background:rgba(8,9,13,.62);backdrop-filter:blur(5px);
+  opacity:0;pointer-events:none;transition:opacity .35s var(--ease)}
+.cart-scrim.open{opacity:1;pointer-events:auto}
+.cart{position:fixed;top:0;right:0;height:100%;width:min(430px,100%);z-index:90;background:var(--yozora);
+  border-left:1px solid rgba(236,231,219,.1);display:flex;flex-direction:column;
+  transform:translateX(102%);transition:transform .45s var(--ease);box-shadow:-30px 0 70px -40px #000}
+.cart.open{transform:none}
+.cart-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding:1.4rem 1.6rem;border-bottom:1px solid rgba(236,231,219,.1)}
+.cart-head h3{font-size:1.7rem}
+.cart-close{background:none;border:0;color:var(--muted);font-size:1.9rem;line-height:1;cursor:pointer;transition:color .3s}
+.cart-close:hover{color:var(--kori)}
+.cart-body{flex:1;overflow-y:auto;padding:.4rem 1.6rem;overscroll-behavior:contain}
+.cart-empty{color:var(--muted);font-size:.92rem;text-align:center;padding:3rem 1rem}
+.cart-row{display:grid;grid-template-columns:1fr auto;gap:.3rem .9rem;align-items:center;
+  padding:1rem 0;border-bottom:1px solid rgba(236,231,219,.07)}
+.cart-row .nm{font-size:.98rem}
+.cart-row .un{grid-column:1;color:var(--muted);font-size:.78rem}
+.cart-row .qty{grid-column:2;grid-row:1/4;align-self:center;display:inline-flex;align-items:center;
+  border:1px solid rgba(236,231,219,.18);border-radius:999px}
+.qty button{width:32px;height:32px;background:none;border:0;color:var(--kori);font-size:1.1rem;
+  line-height:1;cursor:pointer;border-radius:50%;transition:background .25s,color .25s}
+.qty button:hover{background:var(--shu);color:#fff}
+.qty .n{min-width:26px;text-align:center;font-size:.9rem;font-variant-numeric:tabular-nums}
+.cart-row .ln{grid-column:1;font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:600;
+  font-variant-numeric:tabular-nums}
+.cart-row.gift{opacity:.95}
+.cart-row.gift .nm{color:var(--matcha)}
+
+.bonus{margin:1rem 0 .2rem;padding:.9rem 1rem;border:1px dashed rgba(224,169,74,.45);border-radius:14px;
+  background:rgba(224,169,74,.06);font-size:.83rem;color:var(--kori)}
+.bonus b{color:var(--gold);font-weight:600}
+.bar{height:4px;border-radius:999px;background:rgba(236,231,219,.12);margin-top:.6rem;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--shu),var(--gold));
+  transition:width .5s var(--ease)}
+
+.cart-foot{border-top:1px solid rgba(236,231,219,.1);padding:1.2rem 1.6rem 1.6rem;background:rgba(18,20,27,.4)}
+.tot{display:flex;justify-content:space-between;gap:1rem;font-size:.88rem;color:var(--muted);padding:.25rem 0;
+  font-variant-numeric:tabular-nums}
+.tot.off{color:var(--matcha)}
+.tot.grand{color:var(--kori);font-size:1rem;padding-top:.7rem;margin-top:.5rem;
+  border-top:1px solid rgba(236,231,219,.1)}
+.tot.grand b{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:600}
+.cart-foot .btn{width:100%;justify-content:center;margin-top:1rem}
+.cart-note{font-size:.74rem;color:var(--muted);text-align:center;margin-top:.7rem}
+
+/* ——— Форма заказа: поля доставки ——— */
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.field-row.thirds{grid-template-columns:2fr 1fr 1fr}
+.hide{display:none!important}
+.sum-box{border:1px solid rgba(236,231,219,.12);border-radius:14px;padding:1rem 1.1rem;margin:.4rem 0 1.2rem;
+  background:rgba(18,20,27,.45)}
+.sum-box .tot{padding:.2rem 0}
+.sum-box .empty{color:var(--muted);font-size:.85rem}
+.hours{font-size:.78rem;color:var(--gold);margin-bottom:1rem;display:none}
+.hours.show{display:block}
+.form-err{display:none;color:var(--shu-soft);font-size:.82rem;text-align:center;margin-top:.8rem}
+.form-err.show{display:block}
+
+@media(max-width:600px){
+  .cart-fab{right:1rem;bottom:1rem;padding:.75rem 1.1rem}
+  .cart-head{padding:1.1rem 1.2rem}
+  .cart-body{padding:.2rem 1.2rem}
+  .cart-foot{padding:1rem 1.2rem 1.3rem}
+  .field-row,.field-row.thirds{grid-template-columns:1fr}
+}
+
 /* Скрываем до анимации только если JS реально работает.
    .fallback — аварийный режим: CDN не ответил или reduced-motion. */
 .js .reveal{opacity:0;transform:translateY(30px)}
@@ -306,19 +385,19 @@ body.nav-open{overflow:hidden}
         <h3>Sora Lite</h3><div class="weight">720 г · 32 кусочка</div>
         <ul><li>Филадельфия классик</li><li>Калифорния с крабом</li><li>Ролл с огурцом</li><li>Нигири лосось ×2</li></ul>
         <div class="set-price"><span class="now">1 190 ₽</span><span class="old">1 480 ₽</span></div>
-        <a href="#order" class="btn btn-ghost" style="width:100%;justify-content:center">Заказать</a>
+        <button type="button" class="btn btn-ghost" data-add="set-lite" style="width:100%;justify-content:center">В корзину</button>
       </div>
       <div class="set-card featured reveal">
         <div class="badge">хит</div><h3>Sora Big</h3><div class="weight">1 340 г · 56 кусочков</div>
         <ul><li>Дракон с угрём</li><li>Спайси лосось запечённый</li><li>Филадельфия премиум</li><li>Темпура-ролл с креветкой</li><li>Нигири с тунцом ×2</li></ul>
         <div class="set-price"><span class="now">2 290 ₽</span><span class="old">2 940 ₽</span></div>
-        <a href="#order" class="btn btn-primary" style="width:100%;justify-content:center">Заказать</a>
+        <button type="button" class="btn btn-primary" data-add="set-big" style="width:100%;justify-content:center">В корзину</button>
       </div>
       <div class="set-card reveal">
         <h3>Yozora</h3><div class="weight">2 100 г · 88 кусочков</div>
         <ul><li>5 видов роллов</li><li>Ассорти нигири ×8</li><li>Гунканы с икрой</li><li>Соусы и имбирь в подарок</li></ul>
         <div class="set-price"><span class="now">3 690 ₽</span><span class="old">4 620 ₽</span></div>
-        <a href="#order" class="btn btn-ghost" style="width:100%;justify-content:center">Заказать</a>
+        <button type="button" class="btn btn-ghost" data-add="set-yozora" style="width:100%;justify-content:center">В корзину</button>
       </div>
     </div>
   </div>
@@ -326,12 +405,13 @@ body.nav-open{overflow:hidden}
 
 <section class="delivery pad" id="delivery">
   <div class="shell">
-    <div class="section-head"><span class="eyebrow reveal">配達 · доставка</span><h2 class="reveal">Привезём тёплым и целым</h2></div>
+    <div class="section-head"><span class="eyebrow reveal">配達 · доставка</span><h2 class="reveal">Привезём тёплым и целым</h2>
+      <p class="reveal">Работаем ежедневно с 11:00 до 23:00. Минимальный заказ на доставку — 700 ₽.</p></div>
     <div class="deliv-grid" data-stagger>
-      <div class="deliv-item reveal"><div class="ic">60′</div><div class="dtxt"><h3>За 60 минут</h3><p>По городу. Не успели — ролл в подарок к заказу.</p></div></div>
-      <div class="deliv-item reveal"><div class="ic">₽0</div><div class="dtxt"><h3>Бесплатно от 1500 ₽</h3><p>Меньше суммы — доставка 200 ₽ по зоне.</p></div></div>
-      <div class="deliv-item reveal"><div class="ic">❄</div><div class="dtxt"><h3>Термосумки</h3><p>Отдельно горячее и холодное. Рыба не «плывёт».</p></div></div>
-      <div class="deliv-item reveal"><div class="ic">✳</div><div class="dtxt"><h3>Каждый 5-й — приз</h3><p>Копите заказы в приложении: сет или напиток бесплатно.</p></div></div>
+      <div class="deliv-item reveal"><div class="ic">60′</div><div class="dtxt"><h3>За 60 минут</h3><p>По городу, в термосумках. Горячее и холодное — раздельно.</p></div></div>
+      <div class="deliv-item reveal"><div class="ic">₽0</div><div class="dtxt"><h3>Бесплатно от 1500 ₽</h3><p>Меньше суммы — доставка 200 ₽. Самовывоз дешевле ещё на 150 ₽.</p></div></div>
+      <div class="deliv-item reveal"><div class="ic">茶</div><div class="dtxt"><h3>3 позиции — чай в подарок</h3><p>Чайник сенчи 500 мл добавляем к заказу сами.</p></div></div>
+      <div class="deliv-item reveal"><div class="ic">%</div><div class="dtxt"><h3>Скидка растёт с заказом</h3><p>5% от 2000 ₽, 8% от 3000 ₽, 12% от 5000 ₽. Считается в корзине.</p></div></div>
     </div>
   </div>
 </section>
@@ -348,14 +428,46 @@ body.nav-open{overflow:hidden}
       <div class="contact-line reveal"><span class="k">Соцсети</span><span class="v"><a href="#">Telegram</a> · <a href="#">Instagram</a></span></div>
     </div>
     <form id="order-form" class="reveal">
-      <div class="field"><label for="f-name">Как вас зовут</label><input id="f-name" type="text" name="name" required placeholder="Имя" autocomplete="name" /></div>
-      <div class="field"><label for="f-phone">Телефон</label><input id="f-phone" type="tel" name="phone" required placeholder="+7 ___ ___-__-__" autocomplete="tel" inputmode="tel" /></div>
-      <div class="field"><label for="f-type">Что нужно</label><select id="f-type" name="type"><option>Доставка</option><option>Самовывоз</option><option>Бронь стола</option></select></div>
-      <div class="field"><label for="f-note">Комментарий</label><textarea id="f-note" name="note" placeholder="Что заказать, на какое время, сколько гостей"></textarea></div>
+      <p class="hours" id="hours-note"></p>
+
+      <div class="field"><label for="f-type">Что нужно</label>
+        <select id="f-type" name="type"><option>Доставка</option><option>Самовывоз</option><option>Бронь стола</option></select></div>
+
+      <div class="field-row">
+        <div class="field"><label for="f-name">Как вас зовут</label><input id="f-name" type="text" name="name" required placeholder="Имя" autocomplete="name" /></div>
+        <div class="field"><label for="f-phone">Телефон</label><input id="f-phone" type="tel" name="phone" required placeholder="+7 ___ ___-__-__" autocomplete="tel" inputmode="tel" /></div>
+      </div>
+
+      <div id="addr-fields">
+        <div class="field"><label for="f-street">Улица и дом</label><input id="f-street" type="text" name="street" placeholder="ул. Примерная, 1" autocomplete="street-address" /></div>
+        <div class="field-row thirds">
+          <div class="field"><label for="f-flat">Квартира / офис</label><input id="f-flat" type="text" name="flat" placeholder="12" /></div>
+          <div class="field"><label for="f-entr">Подъезд</label><input id="f-entr" type="text" name="entrance" placeholder="2" /></div>
+          <div class="field"><label for="f-floor">Этаж</label><input id="f-floor" type="text" name="floor" placeholder="5" /></div>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field"><label for="f-when">Когда</label>
+          <select id="f-when" name="when"><option>Как можно скорее</option><option>Ко времени</option></select></div>
+        <div class="field"><label for="f-time">Время</label><input id="f-time" type="time" name="time" disabled /></div>
+      </div>
+
+      <div class="field-row">
+        <div class="field" id="pay-field"><label for="f-pay">Оплата</label>
+          <select id="f-pay" name="pay"><option>Картой курьеру</option><option>Наличными</option><option>Переводом по телефону</option></select></div>
+        <div class="field"><label for="f-persons">Приборы, шт</label><input id="f-persons" type="number" name="persons" min="0" max="20" value="2" /></div>
+      </div>
+
+      <div class="field"><label for="f-note">Комментарий</label><textarea id="f-note" name="note" placeholder="Домофон, пожелания по остроте, во сколько удобно"></textarea></div>
+
+      <div class="sum-box" id="order-summary"></div>
+
       <input type="text" name="company" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
-      <button type="submit" class="btn btn-primary">Отправить заявку</button>
+      <button type="submit" class="btn btn-primary">Оформить заказ</button>
+      <p class="form-err" id="form-err"></p>
       <p class="form-note">Нажимая, вы соглашаетесь на обработку данных для ответа на заявку.</p>
-      <p class="form-ok" id="form-ok">Спасибо! Перезвоним в течение 5 минут.</p>
+      <p class="form-ok" id="form-ok">Спасибо! Перезвоним в течение 5 минут и подтвердим заказ.</p>
     </form>
   </div>
 </section>
@@ -371,6 +483,21 @@ body.nav-open{overflow:hidden}
   </div>
 </footer>
 
+<button class="cart-fab" id="cart-fab" type="button" aria-controls="cart" aria-expanded="false">
+  <span class="mark jp" aria-hidden="true">箸</span>
+  <span class="cnt" id="cart-count">0</span>
+  <span class="sum" id="cart-sum">0 ₽</span>
+</button>
+<div class="cart-scrim" id="cart-scrim"></div>
+<aside class="cart" id="cart" aria-label="Корзина" aria-hidden="true">
+  <div class="cart-head">
+    <h3>Ваш заказ</h3>
+    <button class="cart-close" id="cart-close" type="button" aria-label="Закрыть корзину">&times;</button>
+  </div>
+  <div class="cart-body" id="cart-body"></div>
+  <div class="cart-foot" id="cart-foot"></div>
+</aside>
+
 <!-- ——— Базовый слой: работает без внешних библиотек ——— -->
 <script>
 (function(){
@@ -378,35 +505,72 @@ const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
 const root = document.documentElement;
 if(reduce) root.classList.add('fallback');
 
+/* ═══ КУДА ПРИХОДЯТ ЗАКАЗЫ ═══
+   Заполните ОДИН из вариантов — остальные можно оставить пустыми.
+   Порядок приоритета сверху вниз; если ничего не заполнено, откроется
+   почтовая программа с готовым письмом (email ниже). */
+const SEND={
+  web3formsKey:'',              // ключ с web3forms.com — заказы приходят на почту, бэкенд не нужен
+  telegram:{token:'',chat:''},  // токен бота и chat_id — заказы приходят в Telegram
+  whatsapp:'',                  // 79990000000 — откроется чат с готовым текстом заказа
+  email:'zakaz@sora-sushi.ru'   // запасной вариант
+};
+/* Ключи можно не хранить в этом файле: объявите window.SORA_SEND
+   в отдельном теге скрипта ВЫШЕ — например {telegram:{token:'…',chat:'…'}} */
+Object.assign(SEND, window.SORA_SEND||{});
+window.SORA_SEND=SEND;
+
+/* ═══ ЭКОНОМИКА АКЦИЙ — все цифры меняются здесь ═══ */
+const PROMO={
+  minOrder:700,                 // минимальная сумма заказа на доставку
+  deliveryFee:200,              // стоимость доставки
+  freeFrom:1500,                // от какой суммы доставка бесплатная
+  pickupOff:.10, pickupMax:150, // самовывоз: −10%, но не больше 150 ₽ (курьер стоит 200 ₽)
+  giftFromItems:3,              // сколько позиций для подарка
+  gift:{name:'Чайник сенчи 500 мл',price:190},
+  tiers:[{from:5000,off:.12},{from:3000,off:.08},{from:2000,off:.05}], // сверху вниз
+  open:11, close:23             // часы работы
+};
+
 /* ——— Меню ——— */
 const MENU=[
- {cat:'rolls',name:'Филадельфия',desc:'Лосось, сливочный сыр, огурец. 230 г',price:390,tag:'хит'},
- {cat:'rolls',name:'Калифорния',desc:'Краб, авокадо, икра тобико. 220 г',price:360},
- {cat:'rolls',name:'Дракон',desc:'Угорь, огурец, унаги-соус, кунжут. 260 г',price:520,tag:'шеф'},
- {cat:'rolls',name:'Спайси лосось',desc:'Запечённый лосось, острый соус. 210 г',price:340},
- {cat:'rolls',name:'Темпура с креветкой',desc:'Хрустящий ролл, тигровая креветка. 240 г',price:450},
- {cat:'rolls',name:'Овощной',desc:'Авокадо, огурец, болгарский перец. 200 г',price:260,tag:'веган'},
- {cat:'nigiri',name:'Нигири лосось',desc:'Свежий лосось на рисе. 2 шт · 60 г',price:180},
- {cat:'nigiri',name:'Нигири тунец',desc:'Тунец аканами. 2 шт · 60 г',price:220},
- {cat:'nigiri',name:'Нигири угорь',desc:'Копчёный унаги, соус. 2 шт · 65 г',price:240},
- {cat:'nigiri',name:'Гункан с икрой',desc:'Икра тобико, нори. 2 шт · 55 г',price:260,tag:'икра'},
- {cat:'hot',name:'Мисо-суп',desc:'Даси, тофу, водоросли вакамэ. 300 мл',price:190},
- {cat:'hot',name:'Гёдза',desc:'Обжаренные пельмешки с курицей. 5 шт',price:290},
- {cat:'hot',name:'Темпура-креветки',desc:'В хрустящем кляре, соус. 6 шт',price:420,tag:'хит'},
- {cat:'drinks',name:'Зелёный чай',desc:'Сенча листовой. Чайник 500 мл',price:190},
- {cat:'drinks',name:'Домашний лимонад',desc:'Юдзу-мята или маракуйя. 400 мл',price:220},
- {cat:'drinks',name:'Саке',desc:'Тёплое или холодное. 180 мл',price:390,tag:'18+'},
+ {id:'phila',cat:'rolls',name:'Филадельфия',desc:'Лосось, сливочный сыр, огурец. 230 г',price:390,tag:'хит'},
+ {id:'california',cat:'rolls',name:'Калифорния',desc:'Краб, авокадо, икра тобико. 220 г',price:360},
+ {id:'dragon',cat:'rolls',name:'Дракон',desc:'Угорь, огурец, унаги-соус, кунжут. 260 г',price:520,tag:'шеф'},
+ {id:'spicy',cat:'rolls',name:'Спайси лосось',desc:'Запечённый лосось, острый соус. 210 г',price:340},
+ {id:'tempura-roll',cat:'rolls',name:'Темпура с креветкой',desc:'Хрустящий ролл, тигровая креветка. 240 г',price:450},
+ {id:'veg',cat:'rolls',name:'Овощной',desc:'Авокадо, огурец, болгарский перец. 200 г',price:260,tag:'веган'},
+ {id:'nig-salmon',cat:'nigiri',name:'Нигири лосось',desc:'Свежий лосось на рисе. 2 шт · 60 г',price:180},
+ {id:'nig-tuna',cat:'nigiri',name:'Нигири тунец',desc:'Тунец аканами. 2 шт · 60 г',price:220},
+ {id:'nig-eel',cat:'nigiri',name:'Нигири угорь',desc:'Копчёный унаги, соус. 2 шт · 65 г',price:240},
+ {id:'gunkan',cat:'nigiri',name:'Гункан с икрой',desc:'Икра тобико, нори. 2 шт · 55 г',price:260,tag:'икра'},
+ {id:'miso',cat:'hot',name:'Мисо-суп',desc:'Даси, тофу, водоросли вакамэ. 300 мл',price:190},
+ {id:'gyoza',cat:'hot',name:'Гёдза',desc:'Обжаренные пельмешки с курицей. 5 шт',price:290},
+ {id:'tempura',cat:'hot',name:'Темпура-креветки',desc:'В хрустящем кляре, соус. 6 шт',price:420,tag:'хит'},
+ {id:'tea',cat:'drinks',name:'Зелёный чай',desc:'Сенча листовой. Чайник 500 мл',price:190},
+ {id:'lemonade',cat:'drinks',name:'Домашний лимонад',desc:'Юдзу-мята или маракуйя. 400 мл',price:220},
+ {id:'sake',cat:'drinks',name:'Саке',desc:'Тёплое или холодное. 180 мл',price:390,tag:'18+'},
 ];
+/* Сеты уже идут со скидкой 20–25%, поэтому процент на них не начисляем */
+const SETS=[
+ {id:'set-lite',name:'Сет Sora Lite',price:1190,noDiscount:true},
+ {id:'set-big',name:'Сет Sora Big',price:2290,noDiscount:true},
+ {id:'set-yozora',name:'Сет Yozora',price:3690,noDiscount:true},
+];
+const CATALOG={};
+MENU.concat(SETS).forEach(i=>CATALOG[i.id]=i);
+
 const glyphs=['寿','鮨','海','空','魚','米','箸','茶'];
 const dishesEl=document.getElementById('dishes');
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const rub=n=>n.toLocaleString('ru-RU')+' ₽';
 function render(cat){
   const list=cat==='all'?MENU:MENU.filter(d=>d.cat===cat);
   dishesEl.innerHTML=list.map((d,i)=>`
    <article class="dish tilt">
      <div class="dish-img"><div class="ph jp" aria-hidden="true">${glyphs[i%glyphs.length]}</div>${d.tag?`<span class="dish-tag">${esc(d.tag)}</span>`:''}</div>
      <div class="dish-body"><h3>${esc(d.name)}</h3><p class="desc">${esc(d.desc)}</p>
-       <div class="dish-foot"><span class="price">${d.price} <small>₽</small></span><button class="add" type="button" aria-label="Добавить «${esc(d.name)}» к заказу">+</button></div>
+       <div class="dish-foot"><span class="price">${d.price} <small>₽</small></span><button class="add" type="button" data-add="${d.id}" aria-label="Добавить «${esc(d.name)}» в корзину">+</button></div>
      </div></article>`).join('');
   /* Слой анимаций (если загрузился) подхватит новые карточки */
   document.dispatchEvent(new CustomEvent('sora:dishes'));
@@ -437,15 +601,148 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
   });
 });
 
-/* ——— «+» кладёт позицию в комментарий к заказу ——— */
-const noteEl=document.getElementById('f-note');
-dishesEl.addEventListener('click',e=>{
-  const b=e.target.closest('.add'); if(!b)return;
-  const name=b.closest('.dish').querySelector('h3').textContent;
-  if(noteEl){const v=noteEl.value.trim();noteEl.value=v?v+', '+name:name;}
-  b.classList.add('added');b.textContent='✓';
-  setTimeout(()=>{b.classList.remove('added');b.textContent='+';},1500);
-  goTo(document.getElementById('order'));
+/* ═══════════ КОРЗИНА ═══════════ */
+const KEY='sora-cart-v1';
+let cart=[];
+try{const s=localStorage.getItem(KEY);if(s)cart=JSON.parse(s).filter(r=>CATALOG[r.id]&&r.qty>0);}catch(_){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(cart));}catch(_){}};
+
+const fab=document.getElementById('cart-fab'), panel=document.getElementById('cart'),
+      scrim=document.getElementById('cart-scrim'), cartBody=document.getElementById('cart-body'),
+      cartFoot=document.getElementById('cart-foot'), summaryEl=document.getElementById('order-summary'),
+      typeEl=document.getElementById('f-type');
+
+function add(id,delta){
+  if(!CATALOG[id])return;
+  const row=cart.find(r=>r.id===id);
+  if(row){row.qty+=delta; if(row.qty<1)cart=cart.filter(r=>r.id!==id);}
+  else if(delta>0)cart.push({id,qty:delta});
+  save();paint();
+}
+const drop=id=>{cart=cart.filter(r=>r.id!==id);save();paint();};
+
+/* ——— Расчёт: подарки, скидки, доставка ——— */
+function calc(){
+  const mode=typeEl?typeEl.value:'Доставка';
+  const rows=cart.map(r=>({...CATALOG[r.id],qty:r.qty})).filter(r=>r.name);
+  const count=rows.reduce((s,r)=>s+r.qty,0);
+  const subtotal=rows.reduce((s,r)=>s+r.price*r.qty,0);
+  /* Процент считаем только с позиций меню: сеты уже продаются со скидкой */
+  const base=rows.filter(r=>!r.noDiscount).reduce((s,r)=>s+r.price*r.qty,0);
+  const tier=PROMO.tiers.find(t=>subtotal>=t.from)||null;
+  const discount=tier?Math.round(base*tier.off):0;
+  const gift=count>=PROMO.giftFromItems?PROMO.gift:null;
+  const pickup=mode==='Самовывоз';
+  const pickupOff=pickup&&subtotal>0?Math.min(PROMO.pickupMax,Math.round(subtotal*PROMO.pickupOff)):0;
+  const delivery=(pickup||mode==='Бронь стола'||subtotal===0)?0:(subtotal>=PROMO.freeFrom?0:PROMO.deliveryFee);
+  const total=Math.max(0,subtotal-discount-pickupOff)+delivery;
+  const next=[...PROMO.tiers].reverse().find(t=>subtotal<t.from)||null;
+  return {mode,rows,count,subtotal,base,tier,discount,gift,pickup,pickupOff,delivery,total,next,
+          belowMin:!pickup&&mode!=='Бронь стола'&&subtotal>0&&subtotal<PROMO.minOrder};
+}
+
+/* ——— Следующая выгода: одна цель, самая близкая ——— */
+function bonusHTML(t){
+  if(!t.subtotal)return '';
+  const goals=[];
+  if(t.count<PROMO.giftFromItems)
+    goals.push({need:PROMO.giftFromItems-t.count,
+      txt:`Ещё <b>${PROMO.giftFromItems-t.count}</b> позиции — и <b>${esc(PROMO.gift.name)}</b> в подарок`,
+      pct:t.count/PROMO.giftFromItems});
+  if(!t.pickup&&t.subtotal<PROMO.freeFrom)
+    goals.push({need:PROMO.freeFrom-t.subtotal,
+      txt:`До бесплатной доставки — <b>${rub(PROMO.freeFrom-t.subtotal)}</b>`,
+      pct:t.subtotal/PROMO.freeFrom});
+  if(t.next)
+    goals.push({need:t.next.from-t.subtotal,
+      txt:`До скидки <b>${Math.round(t.next.off*100)}%</b> — <b>${rub(t.next.from-t.subtotal)}</b>`,
+      pct:t.subtotal/t.next.from});
+  if(!goals.length)
+    return `<div class="bonus">Максимальная выгода уже ваша: <b>скидка 12%</b>, бесплатная доставка и подарок.</div>`;
+  const g=goals.sort((a,b)=>a.pct-b.pct).pop();
+  return `<div class="bonus">${g.txt}<div class="bar"><i style="width:${Math.min(100,g.pct*100).toFixed(0)}%"></i></div></div>`;
+}
+
+function totalsHTML(t){
+  let h=`<div class="tot"><span>Позиции (${t.count})</span><span>${rub(t.subtotal)}</span></div>`;
+  if(t.discount)h+=`<div class="tot off"><span>Скидка ${Math.round(t.tier.off*100)}%</span><span>−${rub(t.discount)}</span></div>`;
+  if(t.pickupOff)h+=`<div class="tot off"><span>Самовывоз</span><span>−${rub(t.pickupOff)}</span></div>`;
+  if(t.mode!=='Бронь стола')h+=`<div class="tot"><span>Доставка</span><span>${t.pickup?'самовывоз':(t.delivery?rub(t.delivery):'бесплатно')}</span></div>`;
+  if(t.gift)h+=`<div class="tot off"><span>${esc(t.gift.name)}</span><span>в подарок</span></div>`;
+  h+=`<div class="tot grand"><span>Итого</span><b>${rub(t.total)}</b></div>`;
+  return h;
+}
+
+function paint(){
+  const t=calc();
+  /* Кнопка-корзина */
+  document.getElementById('cart-count').textContent=t.count;
+  document.getElementById('cart-sum').textContent=rub(t.total);
+  fab.classList.toggle('show',t.count>0);
+
+  /* Панель */
+  cartBody.innerHTML = t.rows.length
+    ? t.rows.map(r=>`
+      <div class="cart-row">
+        <div class="nm">${esc(r.name)}</div>
+        <div class="un">${rub(r.price)} за шт${r.noDiscount?' · без доп. скидки':''}</div>
+        <div class="qty">
+          <button type="button" data-dec="${r.id}" aria-label="Убрать одну">−</button>
+          <span class="n">${r.qty}</span>
+          <button type="button" data-inc="${r.id}" aria-label="Добавить одну">+</button>
+        </div>
+        <div class="ln">${rub(r.price*r.qty)} <button type="button" class="cart-close" style="font-size:1.15rem;vertical-align:middle;margin-left:.4rem" data-del="${r.id}" aria-label="Удалить ${esc(r.name)} из корзины">&times;</button></div>
+      </div>`).join('')
+      + (t.gift?`<div class="cart-row gift"><div class="nm">${esc(t.gift.name)}</div><div class="un">подарок за ${PROMO.giftFromItems}+ позиции</div><div class="ln">0 ₽</div></div>`:'')
+      + bonusHTML(t)
+    : `<p class="cart-empty">Корзина пуста. Добавьте позиции из меню — при трёх и более положим чайник сенчи в подарок.</p>`;
+
+  cartFoot.innerHTML = t.rows.length
+    ? totalsHTML(t)
+      + `<button type="button" class="btn btn-primary" id="cart-go">Перейти к оформлению</button>`
+      + (t.belowMin?`<p class="cart-note" style="color:var(--shu-soft)">Минимальный заказ на доставку — ${rub(PROMO.minOrder)}. Не хватает ${rub(PROMO.minOrder-t.subtotal)}.</p>`
+                   :`<p class="cart-note">Оплата при получении. Курьер приедет за 60 минут.</p>`)
+      + `<p class="cart-note"><button type="button" id="cart-clear" style="background:none;border:0;color:var(--muted);font:inherit;text-decoration:underline;cursor:pointer">Очистить корзину</button></p>`
+    : '';
+
+  /* Сводка в форме заказа */
+  summaryEl.innerHTML = t.rows.length
+    ? t.rows.map(r=>`<div class="tot"><span>${esc(r.name)} × ${r.qty}</span><span>${rub(r.price*r.qty)}</span></div>`).join('')
+      + (t.gift?`<div class="tot off"><span>${esc(t.gift.name)}</span><span>подарок</span></div>`:'')
+      + totalsHTML(t).replace(/<div class="tot"><span>Позиции[^]*?<\/div>/,'')
+    : `<p class="empty">Корзина пуста — можно просто оставить заявку, и мы подберём состав по телефону.</p>`;
+}
+
+/* Открытие / закрытие панели */
+function setCart(open){
+  panel.classList.toggle('open',open);
+  scrim.classList.toggle('open',open);
+  panel.setAttribute('aria-hidden',String(!open));
+  fab.setAttribute('aria-expanded',String(open));
+  document.body.classList.toggle('nav-open',open);
+}
+fab.addEventListener('click',()=>setCart(true));
+scrim.addEventListener('click',()=>setCart(false));
+document.getElementById('cart-close').addEventListener('click',()=>setCart(false));
+addEventListener('keydown',e=>{if(e.key==='Escape')setCart(false);});
+
+/* Клики: добавить из меню и сетов, изменить количество */
+document.addEventListener('click',e=>{
+  const a=e.target.closest('[data-add]');
+  if(a){
+    add(a.dataset.add,1);
+    fab.classList.remove('bump');void fab.offsetWidth;fab.classList.add('bump');
+    if(a.classList.contains('add')){a.classList.add('added');a.textContent='✓';
+      setTimeout(()=>{a.classList.remove('added');a.textContent='+';},1200);}
+    else setCart(true);
+    return;
+  }
+  const inc=e.target.closest('[data-inc]'), dec=e.target.closest('[data-dec]'), del=e.target.closest('[data-del]');
+  if(inc)add(inc.dataset.inc,1);
+  else if(dec)add(dec.dataset.dec,-1);
+  else if(del)drop(del.dataset.del);
+  else if(e.target.closest('#cart-clear')){cart=[];save();paint();}
+  else if(e.target.closest('#cart-go')){setCart(false);goTo(document.getElementById('order'));}
 });
 
 /* ——— Шапка / моб.меню ——— */
@@ -464,13 +761,113 @@ addEventListener('click',e=>{
   if(links.classList.contains('open')&&!links.contains(e.target)&&!toggle.contains(e.target))setNav(false);
 });
 
-/* ——— Форма ——— */
-document.getElementById('order-form').addEventListener('submit',e=>{
-  e.preventDefault();const f=e.target;if(f.company.value)return;if(!f.reportValidity())return;
-  document.getElementById('form-ok').style.display='block';
-  const b=f.querySelector('button[type=submit]');b.textContent='Отправлено';b.disabled=true;
-  // ЗАМЕНИТЬ: подключить Telegram-бота / web3forms для реальной доставки заявок
+/* ═══════════ ОФОРМЛЕНИЕ ЗАКАЗА ═══════════ */
+const form=document.getElementById('order-form'), errEl=document.getElementById('form-err'),
+      addrEl=document.getElementById('addr-fields'), whenEl=document.getElementById('f-when'),
+      timeEl=document.getElementById('f-time'), payEl=document.getElementById('pay-field');
+
+function syncForm(){
+  const mode=typeEl.value, delivery=mode==='Доставка';
+  addrEl.classList.toggle('hide',!delivery);
+  /* скрытое поле не должно блокировать отправку */
+  document.getElementById('f-street').required=delivery;
+  payEl.classList.toggle('hide',mode==='Бронь стола');
+  paint();
+}
+typeEl.addEventListener('change',syncForm);
+whenEl.addEventListener('change',()=>{timeEl.disabled=whenEl.value!=='Ко времени';if(timeEl.disabled)timeEl.value='';});
+
+/* Часы работы */
+(function(){
+  const h=new Date().getHours(), n=document.getElementById('hours-note');
+  if(h<PROMO.open||h>=PROMO.close){
+    n.textContent=`Сейчас закрыто. Заявку примем — подтвердим и привезём после ${PROMO.open}:00.`;
+    n.classList.add('show');
+  }
+})();
+
+/* Текст заказа для оператора */
+function orderText(t,f,num){
+  const L=[`Заказ ${num} · Sora Sushi`,`Тип: ${t.mode}`,`Имя: ${f.name.value}`,`Телефон: ${f.phone.value}`];
+  if(t.mode==='Доставка'){
+    const addr=[f.street.value,f.flat.value&&'кв./офис '+f.flat.value,f.entrance.value&&'подъезд '+f.entrance.value,f.floor.value&&'этаж '+f.floor.value].filter(Boolean);
+    L.push('Адрес: '+addr.join(', '));
+  }
+  L.push('Когда: '+(f.when.value==='Ко времени'&&f.time.value?'к '+f.time.value:'как можно скорее'));
+  if(t.mode!=='Бронь стола')L.push('Оплата: '+f.pay.value);
+  L.push('Приборы: '+(f.persons.value||'0'));
+  if(f.note.value.trim())L.push('Комментарий: '+f.note.value.trim());
+  L.push('','Состав:');
+  t.rows.forEach(r=>L.push(`• ${r.name} × ${r.qty} — ${rub(r.price*r.qty)}`));
+  if(t.gift)L.push(`• ${t.gift.name} — подарок`);
+  L.push('',`Позиции: ${rub(t.subtotal)}`);
+  if(t.discount)L.push(`Скидка ${Math.round(t.tier.off*100)}%: −${rub(t.discount)}`);
+  if(t.pickupOff)L.push(`Самовывоз: −${rub(t.pickupOff)}`);
+  if(t.mode!=='Бронь стола')L.push('Доставка: '+(t.pickup?'самовывоз':(t.delivery?rub(t.delivery):'бесплатно')));
+  L.push(`ИТОГО: ${rub(t.total)}`);
+  return L.join('\n');
+}
+
+async function deliver(text,num){
+  if(SEND.web3formsKey){
+    const r=await fetch('https://api.web3forms.com/submit',{method:'POST',
+      headers:{'Content-Type':'application/json',Accept:'application/json'},
+      body:JSON.stringify({access_key:SEND.web3formsKey,subject:'Заказ '+num+' — Sora Sushi',message:text})});
+    if(!r.ok)throw new Error('web3forms '+r.status);
+    return 'Заказ отправлен.';
+  }
+  if(SEND.telegram.token&&SEND.telegram.chat){
+    const r=await fetch(`https://api.telegram.org/bot${SEND.telegram.token}/sendMessage`,{method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({chat_id:SEND.telegram.chat,text})});
+    if(!r.ok)throw new Error('telegram '+r.status);
+    return 'Заказ отправлен.';
+  }
+  if(SEND.whatsapp){
+    open(`https://wa.me/${SEND.whatsapp}?text=${encodeURIComponent(text)}`,'_blank','noopener');
+    return 'Открыли WhatsApp — отправьте готовое сообщение.';
+  }
+  location.href=`mailto:${SEND.email}?subject=${encodeURIComponent('Заказ '+num)}&body=${encodeURIComponent(text)}`;
+  return 'Открыли почту — отправьте готовое письмо.';
+}
+
+form.addEventListener('submit',async e=>{
+  e.preventDefault();
+  const f=e.target; if(f.company.value)return;
+  errEl.classList.remove('show');
+  if(!f.reportValidity())return;
+
+  const t=calc();
+  if(t.mode!=='Бронь стола'&&!t.rows.length){
+    errEl.textContent='Корзина пуста — добавьте хотя бы одну позицию из меню.';
+    errEl.classList.add('show');return;
+  }
+  if(t.belowMin){
+    errEl.textContent=`Минимальный заказ на доставку — ${rub(PROMO.minOrder)}. Добавьте ещё на ${rub(PROMO.minOrder-t.subtotal)} или выберите самовывоз.`;
+    errEl.classList.add('show');return;
+  }
+
+  const num='SR-'+Date.now().toString(36).slice(-5).toUpperCase();
+  const text=orderText(t,f,num);
+  const btn=f.querySelector('button[type=submit]');
+  btn.disabled=true;btn.textContent='Отправляем…';
+  try{
+    const msg=await deliver(text,num);
+    try{await navigator.clipboard.writeText(text);}catch(_){}
+    document.getElementById('form-ok').textContent=`${msg} Номер заказа ${num}. Перезвоним в течение 5 минут.`;
+    document.getElementById('form-ok').style.display='block';
+    btn.textContent='Заказ принят';
+    cart=[];save();paint();
+  }catch(err){
+    console.warn('Sora: не удалось отправить заказ',err);
+    errEl.textContent='Не получилось отправить. Позвоните нам — состав заказа уже скопирован в буфер обмена.';
+    errEl.classList.add('show');
+    try{await navigator.clipboard.writeText(text);}catch(_){}
+    btn.disabled=false;btn.textContent='Оформить заказ';
+  }
 });
+
+syncForm();
 
 /* ——— Страховка: если CDN не ответил за 4 с — показываем контент как есть ——— */
 setTimeout(()=>{if(!root.classList.contains('anim'))root.classList.add('fallback');},4000);
