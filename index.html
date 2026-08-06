@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sora Sushi — 空 суши-кафе и доставка</title>
+<meta name="description" content="Sora Sushi (空 — небо) — суши-кафе и доставка. Свежая рыба, авторские роллы и сеты. Доставка за 60 минут." />
+<meta property="og:title" content="Sora Sushi — суши-кафе и доставка" />
+<meta property="og:description" content="Свежая рыба, авторские роллы и сеты. Доставка за 60 минут." />
+<meta property="og:image" content="assets/hero-bg.jpg" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%2315171f'/><circle cx='16' cy='17' r='8' fill='%23e0653b'/></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --sumi:#12141b;--yozora:#1b2030;--ai:#2a3552;--kori:#ece7db;--kori-2:#f6f2e9;
+  --shu:#e0653b;--shu-soft:#f08a5d;--matcha:#8aa38c;--gold:#e0a94a;--muted:#9198a8;
+  --ease:cubic-bezier(.19,1,.22,1);--shell:min(1180px,92vw);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Manrope',system-ui,sans-serif;background:var(--sumi);color:var(--kori);line-height:1.6;overflow-x:hidden}
+h1,h2,h3,.display{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;line-height:1.03;letter-spacing:-.01em}
+.jp{font-family:'Noto Serif JP',serif}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.shell{width:var(--shell);margin-inline:auto}
+.eyebrow{font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;color:var(--shu-soft);font-weight:600}
+.btn{display:inline-flex;align-items:center;gap:.6rem;padding:.95rem 1.9rem;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600;border:1px solid var(--shu);border-radius:999px;transition:background .35s var(--ease),color .35s,border-color .35s;cursor:pointer;will-change:transform}
+.btn-primary{background:var(--shu);color:#fff}
+.btn-primary:hover{background:var(--shu-soft);border-color:var(--shu-soft)}
+.btn-ghost{background:transparent;color:var(--kori);border-color:rgba(236,231,219,.35)}
+.btn-ghost:hover{border-color:var(--kori);background:rgba(236,231,219,.06)}
+
+header{position:fixed;inset:0 0 auto;z-index:50;transition:background .5s var(--ease),padding .4s var(--ease);padding:1.4rem 0}
+header.scrolled{background:rgba(18,20,27,.8);backdrop-filter:blur(16px);padding:.8rem 0;border-bottom:1px solid rgba(236,231,219,.08)}
+.nav{display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:.7rem;font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600}
+.logo .mark{width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 40% 35%,var(--shu-soft),var(--shu) 70%);box-shadow:0 0 26px rgba(224,101,59,.55);flex:0 0 auto}
+.nav-links{display:flex;gap:2.2rem;align-items:center}
+.nav-links a{font-size:.9rem;color:var(--muted);transition:color .3s}
+.nav-links a:hover{color:var(--kori)}
+.nav-toggle{display:none;background:none;border:0;color:var(--kori);cursor:pointer;width:30px;height:30px}
+.nav-toggle span{display:block;width:22px;height:1.5px;background:var(--kori);margin:5px 0;transition:.3s}
+
+/* Герой */
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0;background:url('assets/hero-bg.jpg') center 40%/cover no-repeat;transform:scale(1.08);will-change:transform}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,20,27,.55) 0%,rgba(18,20,27,.25) 45%,rgba(18,20,27,.85) 100%)}
+#hero-canvas{position:absolute;inset:0;z-index:1;pointer-events:none}
+.hero-inner{position:relative;z-index:3;text-align:center;width:100%}
+.hero .jp-big{font-size:clamp(3rem,9vw,7rem);color:rgba(236,231,219,.16);font-weight:600;line-height:1;margin-bottom:-.35em;overflow:hidden}
+.hero h1{font-size:clamp(3.4rem,11vw,8.5rem);color:var(--kori);text-shadow:0 4px 40px rgba(0,0,0,.4)}
+.hero h1 em{font-style:italic;color:var(--shu-soft)}
+.hero h1 .w{display:inline-block;will-change:transform}
+.hero p{max-width:34ch;margin:1.6rem auto 2.4rem;color:#cfd3dd;font-size:1.08rem}
+.hero-cta{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:3;font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:.6rem}
+.scroll-hint::after{content:'';width:1px;height:34px;background:linear-gradient(var(--shu),transparent);animation:pulse 2s var(--ease) infinite}
+@keyframes pulse{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+section{position:relative}
+.pad{padding:clamp(4.5rem,10vw,8.5rem) 0}
+.section-head{text-align:center;margin-bottom:3.5rem}
+.section-head h2{font-size:clamp(2.4rem,5.5vw,3.9rem);margin-top:.7rem}
+.section-head p{color:var(--muted);max-width:52ch;margin:1rem auto 0}
+
+.philo{background:var(--sumi)}
+.philo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem}
+.philo-card{text-align:center;padding:2rem 1rem}
+.philo-card .num{font-family:'Cormorant Garamond',serif;font-size:2.8rem;color:var(--shu);opacity:.7}
+.philo-card h3{font-size:1.55rem;margin:.6rem 0 .8rem}
+.philo-card p{color:var(--muted);font-size:.95rem}
+
+.menu{background:linear-gradient(180deg,var(--sumi),#171a24)}
+.menu-tabs{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:3rem}
+.menu-tab{padding:.6rem 1.4rem;border:1px solid rgba(236,231,219,.16);border-radius:999px;background:none;color:var(--muted);font-family:inherit;font-size:.85rem;letter-spacing:.04em;cursor:pointer;transition:.3s}
+.menu-tab.active,.menu-tab:hover{background:var(--shu);border-color:var(--shu);color:#fff}
+.dishes{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.6rem;perspective:1200px}
+.dish{background:rgba(236,231,219,.03);border:1px solid rgba(236,231,219,.08);border-radius:18px;overflow:hidden;transition:border-color .4s,box-shadow .4s;display:flex;flex-direction:column;transform-style:preserve-3d;will-change:transform}
+.dish:hover{border-color:rgba(224,101,59,.45);box-shadow:0 30px 60px -30px rgba(0,0,0,.75)}
+.dish-img{aspect-ratio:4/3;position:relative;overflow:hidden;background:linear-gradient(135deg,#20263a,#2a3552)}
+.dish-img .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif JP',serif;font-size:3.2rem;color:rgba(236,231,219,.14);transition:transform .6s var(--ease)}
+.dish:hover .dish-img .ph{transform:scale(1.15) rotate(-4deg)}
+.dish-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.dish:hover .dish-img img{transform:scale(1.07)}
+.dish-tag{position:absolute;top:.8rem;left:.8rem;background:var(--shu);color:#fff;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .7rem;border-radius:999px;font-weight:600;transform:translateZ(30px)}
+.dish-body{padding:1.3rem 1.4rem 1.5rem;flex:1;display:flex;flex-direction:column}
+.dish-body h3{font-size:1.45rem;line-height:1.1}
+.dish-body .desc{color:var(--muted);font-size:.86rem;margin:.5rem 0 1rem;flex:1}
+.dish-foot{display:flex;align-items:baseline;justify-content:space-between;gap:1rem}
+.dish-foot .price{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--kori);font-weight:600}
+.dish-foot .price small{font-size:.9rem;color:var(--muted)}
+.add{width:38px;height:38px;border-radius:50%;border:1px solid var(--shu);background:none;color:var(--shu);font-size:1.3rem;cursor:pointer;transition:.3s;flex:0 0 auto;line-height:1}
+.add:hover{background:var(--shu);color:#fff;transform:rotate(90deg)}
+
+.sets{background:var(--yozora);position:relative;overflow:hidden}
+.sets .glow{position:absolute;right:-10%;top:-20%;width:50vw;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(224,101,59,.2),transparent 65%);pointer-events:none;will-change:transform}
+.set-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem;position:relative}
+.set-card{border:1px solid rgba(236,231,219,.14);border-radius:20px;padding:2.2rem;position:relative;transition:transform .4s var(--ease),border-color .4s;background:rgba(18,20,27,.4)}
+.set-card:hover{transform:translateY(-8px);border-color:var(--shu)}
+.set-card.featured{border-color:var(--shu);background:rgba(224,101,59,.08)}
+.set-card .badge{position:absolute;top:-.7rem;left:2.2rem;background:var(--shu);color:#fff;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .9rem;border-radius:999px;font-weight:600}
+.set-card h3{font-size:2rem;margin-bottom:.4rem}
+.set-card .weight{color:var(--muted);font-size:.85rem;margin-bottom:1.2rem}
+.set-card ul{list-style:none;margin-bottom:1.6rem}
+.set-card li{padding:.4rem 0;border-bottom:1px solid rgba(236,231,219,.07);font-size:.9rem}
+.set-card li:last-child{border:0}
+.set-price{display:flex;align-items:baseline;gap:.6rem;margin-bottom:1.4rem}
+.set-price .now{font-family:'Cormorant Garamond',serif;font-size:2.4rem;color:var(--shu-soft);font-weight:600}
+.set-price .old{color:var(--muted);text-decoration:line-through;font-size:1.1rem}
+
+.delivery{background:var(--sumi)}
+.deliv-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem;text-align:center}
+.deliv-item{padding:2.2rem 1rem;border:1px solid rgba(236,231,219,.08);border-radius:16px;transition:.4s}
+.deliv-item:hover{border-color:rgba(224,101,59,.35);background:rgba(236,231,219,.02);transform:translateY(-4px)}
+.deliv-item .ic{width:60px;height:60px;margin:0 auto 1.1rem;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(224,101,59,.13);color:var(--shu-soft);font-size:1.5rem;font-family:'Cormorant Garamond',serif}
+.deliv-item h3{font-size:1.4rem;margin-bottom:.4rem}
+.deliv-item p{color:var(--muted);font-size:.88rem}
+
+.order{background:linear-gradient(180deg,#171a24,var(--sumi));position:relative;overflow:hidden}
+.order-wrap{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.order-info h2{font-size:clamp(2.2rem,5vw,3.5rem);margin-bottom:1.2rem}
+.order-info p{color:var(--muted);margin-bottom:2rem;max-width:40ch}
+.contact-line{display:flex;align-items:center;gap:1rem;padding:1rem 0;border-top:1px solid rgba(236,231,219,.08)}
+.contact-line .k{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--shu-soft);width:90px;flex:0 0 auto}
+.contact-line .v{font-size:1.05rem}
+form{background:rgba(236,231,219,.03);border:1px solid rgba(236,231,219,.1);border-radius:22px;padding:2.4rem}
+.field{margin-bottom:1.2rem}
+.field label{display:block;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+.field input,.field select,.field textarea{width:100%;padding:.85rem 1rem;background:rgba(18,20,27,.6);border:1px solid rgba(236,231,219,.14);border-radius:12px;color:var(--kori);font-family:inherit;font-size:.95rem;transition:.3s}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--shu)}
+.field textarea{resize:vertical;min-height:80px}
+form .btn{width:100%;justify-content:center;margin-top:.5rem}
+.form-note{font-size:.76rem;color:var(--muted);text-align:center;margin-top:1rem}
+.form-ok{display:none;text-align:center;color:var(--matcha);font-weight:600;margin-top:1rem}
+
+footer{background:#0e1018;padding:4rem 0 2rem;border-top:1px solid rgba(236,231,219,.07)}
+.foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.foot-grid h4{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--shu-soft);margin-bottom:1.2rem}
+.foot-grid a,.foot-grid p{color:var(--muted);font-size:.92rem;display:block;margin-bottom:.6rem;transition:color .3s}
+.foot-grid a:hover{color:var(--kori)}
+.foot-logo{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:600;color:var(--kori);margin-bottom:.8rem}
+.foot-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding-top:2rem;border-top:1px solid rgba(236,231,219,.07);color:var(--muted);font-size:.8rem}
+
+.reveal{opacity:0;transform:translateY(30px)}
+
+@media(max-width:900px){
+  .nav-links{position:fixed;inset:0 0 0 auto;width:min(78vw,320px);background:var(--yozora);flex-direction:column;justify-content:center;gap:1.8rem;transform:translateX(100%);transition:transform .4s var(--ease);padding:2rem}
+  .nav-links.open{transform:none}
+  .nav-links a{font-size:1.1rem}
+  .nav-toggle{display:block;z-index:60}
+  .philo-grid,.set-grid,.deliv-grid{grid-template-columns:1fr}
+  .deliv-grid{grid-template-columns:1fr 1fr}
+  .order-wrap{grid-template-columns:1fr;gap:2.5rem}
+  .foot-grid{grid-template-columns:1fr;gap:2rem}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none}.hero-bg{transform:none}}
+</style>
+</head>
+<body>
+
+<header id="hdr">
+  <div class="shell nav">
+    <a href="#" class="logo"><span class="mark"></span>Sora <span class="jp" style="font-size:1.1rem;color:var(--muted)">空</span></a>
+    <nav class="nav-links" id="navlinks">
+      <a href="#philo">О нас</a><a href="#menu">Меню</a><a href="#sets">Сеты</a><a href="#delivery">Доставка</a>
+      <a href="#order" class="btn btn-primary magnetic" style="padding:.6rem 1.3rem">Заказать</a>
+    </nav>
+    <button class="nav-toggle" id="navtoggle" aria-label="Меню"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-bg" id="hero-bg"></div>
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-inner shell">
+    <div class="jp-big jp"><span class="w">空</span></div>
+    <h1 id="hero-title">Sora <em>Sushi</em></h1>
+    <p class="hero-sub">Небо начинается с первого кусочка. Свежая рыба, авторские роллы и сеты — в кафе и с доставкой.</p>
+    <div class="hero-cta hero-sub">
+      <a href="#menu" class="btn btn-primary magnetic">Смотреть меню</a>
+      <a href="#order" class="btn btn-ghost magnetic">Заказать доставку</a>
+    </div>
+  </div>
+  <div class="scroll-hint">листайте вниз</div>
+</section>
+
+<section class="philo pad" id="philo">
+  <div class="shell">
+    <div class="section-head">
+      <span class="eyebrow reveal">空 — небо</span>
+      <h2 class="reveal">Три вещи, в которых мы не идём на компромисс</h2>
+      <p class="reveal">«Sora» по-японски — небо. Мы верим, что хороший ролл лёгкий и чистый, как воздух над океаном.</p>
+    </div>
+    <div class="philo-grid" data-stagger>
+      <div class="philo-card reveal"><div class="num">壱</div><h3>Рыба дня</h3><p>Лосось, тунец и угорь приезжают утром. Что не продали за день — не подаём завтра.</p></div>
+      <div class="philo-card reveal"><div class="num">弐</div><h3>Рис как основа</h3><p>Японский рис, рисовый уксус, температура тела. Хороший рис важнее модной начинки.</p></div>
+      <div class="philo-card reveal"><div class="num">参</div><h3>Руки повара</h3><p>Каждый ролл лепится вручную под заказ. Никаких заготовок с утра в холодильнике.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="menu pad" id="menu">
+  <div class="shell">
+    <div class="section-head">
+      <span class="eyebrow reveal">お品書き · меню</span>
+      <h2 class="reveal">Выбор шефа</h2>
+      <p class="reveal">Классика и авторские позиции. Цены за порцию, вес указан в описании.</p>
+    </div>
+    <div class="menu-tabs reveal">
+      <button class="menu-tab active" data-cat="all">Всё</button>
+      <button class="menu-tab" data-cat="rolls">Роллы</button>
+      <button class="menu-tab" data-cat="nigiri">Суши</button>
+      <button class="menu-tab" data-cat="hot">Горячее</button>
+      <button class="menu-tab" data-cat="drinks">Напитки</button>
+    </div>
+    <div class="dishes" id="dishes"></div>
+  </div>
+</section>
+
+<section class="sets pad" id="sets">
+  <div class="glow" id="sets-glow"></div>
+  <div class="shell">
+    <div class="section-head">
+      <span class="eyebrow reveal">セット · сеты</span>
+      <h2 class="reveal">Собрали за вас</h2>
+      <p class="reveal">Готовые наборы на компанию — выгоднее, чем поштучно.</p>
+    </div>
+    <div class="set-grid" data-stagger>
+      <div class="set-card reveal">
+        <h3>Sora Lite</h3><div class="weight">720 г · 32 кусочка</div>
+        <ul><li>Филадельфия классик</li><li>Калифорния с крабом</li><li>Ролл с огурцом</li><li>Нигири лосось ×2</li></ul>
+        <div class="set-price"><span class="now">1 190 ₽</span><span class="old">1 480 ₽</span></div>
+        <a href="#order" class="btn btn-ghost" style="width:100%;justify-content:center">Заказать</a>
+      </div>
+      <div class="set-card featured reveal">
+        <div class="badge">хит</div><h3>Sora Big</h3><div class="weight">1 340 г · 56 кусочков</div>
+        <ul><li>Дракон с угрём</li><li>Спайси лосось запечённый</li><li>Филадельфия премиум</li><li>Темпура-ролл с креветкой</li><li>Нигири с тунцом ×2</li></ul>
+        <div class="set-price"><span class="now">2 290 ₽</span><span class="old">2 940 ₽</span></div>
+        <a href="#order" class="btn btn-primary" style="width:100%;justify-content:center">Заказать</a>
+      </div>
+      <div class="set-card reveal">
+        <h3>Yozora</h3><div class="weight">2 100 г · 88 кусочков</div>
+        <ul><li>5 видов роллов</li><li>Ассорти нигири ×8</li><li>Гунканы с икрой</li><li>Соусы и имбирь в подарок</li></ul>
+        <div class="set-price"><span class="now">3 690 ₽</span><span class="old">4 620 ₽</span></div>
+        <a href="#order" class="btn btn-ghost" style="width:100%;justify-content:center">Заказать</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="delivery pad" id="delivery">
+  <div class="shell">
+    <div class="section-head"><span class="eyebrow reveal">配達 · доставка</span><h2 class="reveal">Привезём тёплым и целым</h2></div>
+    <div class="deliv-grid" data-stagger>
+      <div class="deliv-item reveal"><div class="ic">60′</div><h3>За 60 минут</h3><p>По городу. Не успели — ролл в подарок к заказу.</p></div>
+      <div class="deliv-item reveal"><div class="ic">₽0</div><h3>Бесплатно от 1500 ₽</h3><p>Меньше суммы — доставка 200 ₽ по зоне.</p></div>
+      <div class="deliv-item reveal"><div class="ic">❄</div><h3>Термосумки</h3><p>Отдельно горячее и холодное. Рыба не «плывёт».</p></div>
+      <div class="deliv-item reveal"><div class="ic">✳</div><h3>Каждый 5-й — приз</h3><p>Копите заказы в приложении: сет или напиток бесплатно.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="order pad" id="order">
+  <div class="shell order-wrap">
+    <div class="order-info">
+      <span class="eyebrow reveal">予約 · заказ и бронь</span>
+      <h2 class="reveal">Оформить заказ или забронировать стол</h2>
+      <p class="reveal">Оставьте контакты — перезвоним за 5 минут, подтвердим состав и время. Или позвоните сами.</p>
+      <div class="contact-line reveal"><span class="k">Телефон</span><a class="v magnetic" href="tel:+70000000000">+7 000 000-00-00</a></div>
+      <div class="contact-line reveal"><span class="k">Адрес</span><span class="v">г. Город, ул. Примерная, 1</span></div>
+      <div class="contact-line reveal"><span class="k">Часы</span><span class="v">Ежедневно 11:00 — 23:00</span></div>
+      <div class="contact-line reveal"><span class="k">Соцсети</span><span class="v"><a href="#">Telegram</a> · <a href="#">Instagram</a></span></div>
+    </div>
+    <form id="order-form" class="reveal">
+      <div class="field"><label>Как вас зовут</label><input type="text" name="name" required placeholder="Имя" /></div>
+      <div class="field"><label>Телефон</label><input type="tel" name="phone" required placeholder="+7 ___ ___-__-__" /></div>
+      <div class="field"><label>Что нужно</label><select name="type"><option>Доставка</option><option>Самовывоз</option><option>Бронь стола</option></select></div>
+      <div class="field"><label>Комментарий</label><textarea name="note" placeholder="Что заказать, на какое время, сколько гостей"></textarea></div>
+      <input type="text" name="company" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
+      <button type="submit" class="btn btn-primary">Отправить заявку</button>
+      <p class="form-note">Нажимая, вы соглашаетесь на обработку данных для ответа на заявку.</p>
+      <p class="form-ok" id="form-ok">Спасибо! Перезвоним в течение 5 минут.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="shell">
+    <div class="foot-grid">
+      <div><div class="foot-logo">Sora <span class="jp">空</span> Sushi</div><p>Суши-кафе и доставка. Свежая рыба, ручная лепка, небо в каждом кусочке.</p></div>
+      <div><h4>Разделы</h4><a href="#philo">О нас</a><a href="#menu">Меню</a><a href="#sets">Сеты</a><a href="#delivery">Доставка</a></div>
+      <div><h4>Контакты</h4><a href="tel:+70000000000">+7 000 000-00-00</a><p>ул. Примерная, 1</p><p>11:00 — 23:00</p></div>
+    </div>
+    <div class="foot-bottom"><span>© 2026 Sora Sushi. Все права защищены.</span><span>Сделано с любовью к рыбе 🐟</span></div>
+  </div>
+</footer>
+
+<script type="module">
+import * as THREE from 'https://esm.sh/three@0.160.0';
+import {gsap} from 'https://esm.sh/gsap@3.12.5';
+import ScrollTrigger from 'https://esm.sh/gsap@3.12.5/ScrollTrigger';
+import Lenis from 'https://esm.sh/lenis@1.1.13';
+gsap.registerPlugin(ScrollTrigger);
+const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+const coarse = matchMedia('(pointer:coarse)').matches;
+
+/* ——— Меню ——— */
+const MENU=[
+ {cat:'rolls',name:'Филадельфия',desc:'Лосось, сливочный сыр, огурец. 230 г',price:390,tag:'хит'},
+ {cat:'rolls',name:'Калифорния',desc:'Краб, авокадо, икра тобико. 220 г',price:360},
+ {cat:'rolls',name:'Дракон',desc:'Угорь, огурец, унаги-соус, кунжут. 260 г',price:520,tag:'шеф'},
+ {cat:'rolls',name:'Спайси лосось',desc:'Запечённый лосось, острый соус. 210 г',price:340},
+ {cat:'rolls',name:'Темпура с креветкой',desc:'Хрустящий ролл, тигровая креветка. 240 г',price:450},
+ {cat:'rolls',name:'Овощной',desc:'Авокадо, огурец, болгарский перец. 200 г',price:260,tag:'веган'},
+ {cat:'nigiri',name:'Нигири лосось',desc:'Свежий лосось на рисе. 2 шт · 60 г',price:180},
+ {cat:'nigiri',name:'Нигири тунец',desc:'Тунец аканами. 2 шт · 60 г',price:220},
+ {cat:'nigiri',name:'Нигири угорь',desc:'Копчёный унаги, соус. 2 шт · 65 г',price:240},
+ {cat:'nigiri',name:'Гункан с икрой',desc:'Икра тобико, нори. 2 шт · 55 г',price:260,tag:'икра'},
+ {cat:'hot',name:'Мисо-суп',desc:'Даси, тофу, водоросли вакамэ. 300 мл',price:190},
+ {cat:'hot',name:'Гёдза',desc:'Обжаренные пельмешки с курицей. 5 шт',price:290},
+ {cat:'hot',name:'Темпура-креветки',desc:'В хрустящем кляре, соус. 6 шт',price:420,tag:'хит'},
+ {cat:'drinks',name:'Зелёный чай',desc:'Сенча листовой. Чайник 500 мл',price:190},
+ {cat:'drinks',name:'Домашний лимонад',desc:'Юдзу-мята или маракуйя. 400 мл',price:220},
+ {cat:'drinks',name:'Саке',desc:'Тёплое или холодное. 180 мл',price:390,tag:'18+'},
+];
+const glyphs=['寿','鮨','海','空','魚','米','箸','茶'];
+const dishesEl=document.getElementById('dishes');
+function render(cat){
+  const list=cat==='all'?MENU:MENU.filter(d=>d.cat===cat);
+  dishesEl.innerHTML=list.map((d,i)=>`
+   <article class="dish tilt">
+     <div class="dish-img"><div class="ph jp">${glyphs[i%glyphs.length]}</div>${d.tag?`<span class="dish-tag">${d.tag}</span>`:''}</div>
+     <div class="dish-body"><h3>${d.name}</h3><p class="desc">${d.desc}</p>
+       <div class="dish-foot"><span class="price">${d.price} <small>₽</small></span><button class="add" aria-label="Добавить">+</button></div>
+     </div></article>`).join('');
+  bindTilt();
+  gsap.fromTo('.dish',{y:24,opacity:0},{y:0,opacity:1,duration:.6,stagger:.05,ease:'power3.out'});
+}
+/* ——— 3D-наклон карточек ——— */
+function bindTilt(){
+  if(coarse||reduce)return;
+  document.querySelectorAll('.tilt').forEach(card=>{
+    card.addEventListener('pointermove',e=>{
+      const r=card.getBoundingClientRect();
+      const px=(e.clientX-r.left)/r.width-.5, py=(e.clientY-r.top)/r.height-.5;
+      gsap.to(card,{rotateY:px*9,rotateX:-py*9,duration:.4,ease:'power2.out',transformPerspective:900});
+    });
+    card.addEventListener('pointerleave',()=>gsap.to(card,{rotateY:0,rotateX:0,duration:.6,ease:'elastic.out(1,.5)'}));
+  });
+}
+render('all');
+document.querySelectorAll('.menu-tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelector('.menu-tab.active').classList.remove('active');t.classList.add('active');render(t.dataset.cat);
+}));
+
+/* ——— Шапка / моб.меню ——— */
+const hdr=document.getElementById('hdr');
+addEventListener('scroll',()=>hdr.classList.toggle('scrolled',scrollY>40),{passive:true});
+const toggle=document.getElementById('navtoggle'),links=document.getElementById('navlinks');
+toggle.addEventListener('click',()=>links.classList.toggle('open'));
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+
+/* ——— Форма ——— */
+document.getElementById('order-form').addEventListener('submit',e=>{
+  e.preventDefault();const f=e.target;if(f.company.value)return;if(!f.reportValidity())return;
+  document.getElementById('form-ok').style.display='block';
+  const b=f.querySelector('button');b.textContent='Отправлено';b.disabled=true;
+  // ЗАМЕНИТЬ: подключить Telegram-бота / web3forms для реальной доставки заявок
+});
+
+if(reduce){
+  document.querySelectorAll('.reveal').forEach(el=>{el.style.opacity=1;el.style.transform='none';});
+}else{
+  /* ——— Инерционный скролл ——— */
+  const lenis=new Lenis({duration:1.1,smoothWheel:true});
+  lenis.on('scroll',ScrollTrigger.update);
+  gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0);
+  document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();lenis.scrollTo(t,{offset:-70,duration:1.3});}
+  }));
+
+  /* ——— Появление секций ——— */
+  gsap.utils.toArray('.reveal').forEach(el=>gsap.fromTo(el,{y:30,opacity:0},{y:0,opacity:1,duration:.9,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%',once:true}}));
+  gsap.utils.toArray('[data-stagger]').forEach(g=>gsap.fromTo(g.children,{y:30,opacity:0},{y:0,opacity:1,duration:.7,stagger:.09,ease:'power3.out',scrollTrigger:{trigger:g,start:'top 84%',once:true}}));
+
+  /* ——— Герой: текст ——— */
+  const tl=gsap.timeline({delay:.2});
+  tl.fromTo('.jp-big .w',{yPercent:120},{yPercent:0,duration:1.1,ease:'expo.out'})
+    .fromTo('#hero-title',{yPercent:60,opacity:0},{yPercent:0,opacity:1,duration:1,ease:'expo.out'},'-=.7')
+    .fromTo('.hero-sub',{y:24,opacity:0},{y:0,opacity:1,duration:.8,stagger:.12,ease:'power3.out'},'-=.4');
+
+  /* ——— Параллакс фона + свечение сетов ——— */
+  gsap.to('#hero-bg',{yPercent:18,scale:1.16,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:.6}});
+  gsap.to('#sets-glow',{yPercent:40,ease:'none',scrollTrigger:{trigger:'.sets',start:'top bottom',end:'bottom top',scrub:1}});
+
+  /* ——— Магнитные кнопки ——— */
+  if(!coarse) document.querySelectorAll('.magnetic').forEach(el=>{
+    el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect();
+      gsap.to(el,{x:(e.clientX-r.left-r.width/2)*.35,y:(e.clientY-r.top-r.height/2)*.4,duration:.4,ease:'power2.out'});});
+    el.addEventListener('pointerleave',()=>gsap.to(el,{x:0,y:0,duration:.6,ease:'elastic.out(1,.4)'}));
+  });
+
+  /* ——— 3D частицы в герое (three.js) ——— */
+  const canvas=document.getElementById('hero-canvas');
+  const scene=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(60,1,.1,100);cam.position.z=6;
+  const rnd=new THREE.WebGLRenderer({canvas,alpha:true,antialias:false});
+  rnd.setClearColor(0x000000,0);
+  const COUNT=coarse?900:2200;
+  const pos=new Float32Array(COUNT*3),seed=new Float32Array(COUNT);
+  for(let i=0;i<COUNT;i++){pos[i*3]=(Math.random()-.5)*16;pos[i*3+1]=(Math.random()-.5)*11;pos[i*3+2]=(Math.random()-.5)*7;seed[i]=Math.random();}
+  const g=new THREE.BufferGeometry();
+  g.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  g.setAttribute('aSeed',new THREE.BufferAttribute(seed,1));
+  const uni={uTime:{value:0},uMouse:{value:new THREE.Vector2(99,99)},uSize:{value:Math.min(devicePixelRatio,2)*2.4},
+    uC1:{value:new THREE.Color(0xf0a94a)},uC2:{value:new THREE.Color(0xe0653b)}};
+  const mat=new THREE.ShaderMaterial({uniforms:uni,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,
+    vertexShader:`uniform float uTime,uSize;uniform vec2 uMouse;attribute float aSeed;varying float vS;
+      void main(){vec3 p=position;float t=uTime*.12+aSeed*6.283;
+        p.y+=mod(uTime*(.15+aSeed*.35),11.0);p.y=mod(p.y+5.5,11.0)-5.5;
+        p.x+=sin(t)*.35;p.z+=cos(t*.7)*.3;
+        float d=distance(p.xy,uMouse);p.xy+=normalize(p.xy-uMouse+.001)*smoothstep(2.5,0.0,d)*.7;
+        vec4 mv=modelViewMatrix*vec4(p,1.0);gl_Position=projectionMatrix*mv;
+        gl_PointSize=uSize*(200.0/-mv.z)*(.4+aSeed*.9);vS=aSeed;}`,
+    fragmentShader:`uniform vec3 uC1,uC2;varying float vS;
+      void main(){float r=length(gl_PointCoord-.5);if(r>.5)discard;
+        float a=smoothstep(.5,.05,r)*(.25+vS*.5);
+        gl_FragColor=vec4(mix(uC2,uC1,vS),a);}`});
+  const pts=new THREE.Points(g,mat);scene.add(pts);
+  function resize(){const w=canvas.clientWidth,h=canvas.clientHeight;rnd.setPixelRatio(Math.min(devicePixelRatio,2));rnd.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();}
+  resize();addEventListener('resize',resize,{passive:true});
+  const mouse={x:99,y:99,tx:99,ty:99};
+  if(!coarse)addEventListener('pointermove',e=>{const r=canvas.getBoundingClientRect();if(e.clientY<r.height){mouse.tx=((e.clientX-r.left)/r.width-.5)*(cam.aspect*6.5);mouse.ty=-((e.clientY-r.top)/r.height-.5)*6.5;}});
+  let run=true;new IntersectionObserver(es=>es.forEach(e=>run=e.isIntersecting)).observe(document.querySelector('.hero'));
+  let last=performance.now();
+  function loop(now){requestAnimationFrame(loop);if(!run){last=now;return;}
+    const dt=Math.min((now-last)/1000,.05);last=now;uni.uTime.value+=dt;
+    mouse.x+=(mouse.tx-mouse.x)*dt*6;mouse.y+=(mouse.ty-mouse.y)*dt*6;uni.uMouse.value.set(mouse.x,mouse.y);
+    pts.rotation.y+=dt*.02;rnd.render(scene,cam);}
+  requestAnimationFrame(loop);
+}
+</script>
+</body>
+</html>
