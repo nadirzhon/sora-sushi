@@ -2,8 +2,8 @@
    ВАЖНО: клиентскому итогу доверять нельзя — сумму платежа считаем только здесь.
    Цены и акции продублированы из index.html; при правке меню обновляйте оба места. */
 
-/* Валюта витрины. Меняете здесь — поменяйте и в index.html (функция rub). */
-export const CURRENCY_LABEL = '₽';
+/* Валюта витрины. Меняете здесь — поменяйте CURRENCY в index.html. */
+export const CURRENCY_LABEL = 'сом';
 export const money = n => n.toLocaleString('ru-RU') + ' ' + CURRENCY_LABEL;
 
 export const PROMO = {
