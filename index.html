@@ -411,7 +411,7 @@ if(reduce){
   rnd.setClearColor(0x000000,0);
   const COUNT=coarse?900:2200;
   const pos=new Float32Array(COUNT*3),seed=new Float32Array(COUNT);
-  for(let i=0;i<COUNT;i++){pos[i*3]=(Math.random()-.5)*16;pos[i*3+1]=(Math.random()-.5)*11;pos[i*3+2]=(Math.random()-.5)*7;seed[i]=Math.random();}
+  for(let i=0;i<COUNT;i++){pos[i*3]=(Math.random()-.5)*16;pos[i*3+1]=(Math.random()-.5)*11;pos[i*3+2]=-1.5-Math.random()*4;seed[i]=Math.random();}
   const g=new THREE.BufferGeometry();
   g.setAttribute('position',new THREE.BufferAttribute(pos,3));
   g.setAttribute('aSeed',new THREE.BufferAttribute(seed,1));
@@ -424,14 +424,19 @@ if(reduce){
         p.x+=sin(t)*.35;p.z+=cos(t*.7)*.3;
         float d=distance(p.xy,uMouse);p.xy+=normalize(p.xy-uMouse+.001)*smoothstep(2.5,0.0,d)*.7;
         vec4 mv=modelViewMatrix*vec4(p,1.0);gl_Position=projectionMatrix*mv;
-        gl_PointSize=uSize*(200.0/-mv.z)*(.4+aSeed*.9);vS=aSeed;}`,
+        gl_PointSize=min(uSize*(200.0/-mv.z)*(.4+aSeed*.9),16.0);vS=aSeed;}`,
     fragmentShader:`uniform vec3 uC1,uC2;varying float vS;
       void main(){float r=length(gl_PointCoord-.5);if(r>.5)discard;
-        float a=smoothstep(.5,.05,r)*(.25+vS*.5);
+        float a=smoothstep(.5,.05,r)*(.14+vS*.32);
         gl_FragColor=vec4(mix(uC2,uC1,vS),a);}`});
   const pts=new THREE.Points(g,mat);scene.add(pts);
-  function resize(){const w=canvas.clientWidth,h=canvas.clientHeight;rnd.setPixelRatio(Math.min(devicePixelRatio,2));rnd.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();}
-  resize();addEventListener('resize',resize,{passive:true});
+  function resize(){
+    const r=canvas.parentElement.getBoundingClientRect();
+    const w=Math.max(r.width,innerWidth),h=Math.max(r.height,innerHeight);
+    rnd.setPixelRatio(Math.min(devicePixelRatio,2));rnd.setSize(w,h,false);
+    cam.aspect=w/h;cam.updateProjectionMatrix();
+  }
+  requestAnimationFrame(resize);addEventListener('resize',resize,{passive:true});
   const mouse={x:99,y:99,tx:99,ty:99};
   if(!coarse)addEventListener('pointermove',e=>{const r=canvas.getBoundingClientRect();if(e.clientY<r.height){mouse.tx=((e.clientX-r.left)/r.width-.5)*(cam.aspect*6.5);mouse.ty=-((e.clientY-r.top)/r.height-.5)*6.5;}});
   let run=true;new IntersectionObserver(es=>es.forEach(e=>run=e.isIntersecting)).observe(document.querySelector('.hero'));
