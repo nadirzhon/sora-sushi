@@ -520,6 +520,29 @@ const SEND={
 Object.assign(SEND, window.SORA_SEND||{});
 window.SORA_SEND=SEND;
 
+/* ═══ ОНЛАЙН-ОПЛАТА ═══
+   mode:
+     'none' — только оплата при получении (по умолчанию)
+     'api'  — рабочий способ: функция /api/pay создаёт платёж у провайдера
+              и возвращает ссылку. Ключи лежат на сервере, сумму сервер
+              пересчитывает сам. Готовый код — в functions/api/, подробности
+              и список провайдеров — в README.md. Для Кыргызстана это
+              Freedom Pay: Элкарт, Visa/Mastercard, О!Деньги, Balance.kg,
+              MegaPay, MBank, Optima24 — одной интеграцией.
+     'link' — готовая платёжная ссылка провайдера, без сервера;
+              {sum} и {order} подставим автоматически. Внимание: сумму
+              в такой ссылке клиент может подменить — сверяйте перед выдачей.
+     'yoomoney' — форма ЮMoney (Россия, физлица), сумма тоже проверяемая вручную */
+const PAY={
+  mode:'none',
+  api:'/api/pay',
+  link:'',                 // напр. 'https://pay.example.kg/?amount={sum}&order={order}'
+  yoomoneyWallet:'',
+  label:'Онлайн-картой'
+};
+Object.assign(PAY, window.SORA_PAY||{});
+window.SORA_PAY=PAY;
+
 /* ═══ ЭКОНОМИКА АКЦИЙ — все цифры меняются здесь ═══ */
 const PROMO={
   minOrder:700,                 // минимальная сумма заказа на доставку
@@ -766,6 +789,14 @@ const form=document.getElementById('order-form'), errEl=document.getElementById(
       addrEl=document.getElementById('addr-fields'), whenEl=document.getElementById('f-when'),
       timeEl=document.getElementById('f-time'), payEl=document.getElementById('pay-field');
 
+/* Онлайн-оплата появляется в списке, только если она настроена */
+const paySel=document.getElementById('f-pay');
+if(PAY.mode!=='none'){
+  const o=document.createElement('option');o.textContent=PAY.label;
+  paySel.insertBefore(o,paySel.firstChild);paySel.value=PAY.label;
+}
+const isOnline=()=>PAY.mode!=='none'&&paySel.value===PAY.label;
+
 function syncForm(){
   const mode=typeEl.value, delivery=mode==='Доставка';
   addrEl.classList.toggle('hide',!delivery);
@@ -831,6 +862,31 @@ async function deliver(text,num){
   return 'Открыли почту — отправьте готовое письмо.';
 }
 
+/* Уводим на оплату. Корзину не чистим: вернётся с ?paid= — тогда и очистим. */
+async function payOnline(t,f,num){
+  if(PAY.mode==='link'){
+    location.href=PAY.link.replace('{sum}',t.total).replace('{order}',encodeURIComponent(num));
+    return;
+  }
+  if(PAY.mode==='yoomoney'){
+    const form=document.createElement('form');
+    form.method='POST';form.action='https://yoomoney.ru/quickpay/confirm';
+    const add=(n,v)=>{const i=document.createElement('input');i.type='hidden';i.name=n;i.value=v;form.appendChild(i);};
+    add('receiver',PAY.yoomoneyWallet);add('quickpay-form','shop');add('paymentType','AC');
+    add('sum',t.total);add('label',num);add('targets',`Заказ ${num} — Sora Sushi`);
+    add('successURL',location.origin+location.pathname+'?paid='+num);
+    form.style.display='none';document.body.appendChild(form);form.submit();
+    return;
+  }
+  /* 'api': сумму пересчитывает сервер — клиентскому итогу доверять нельзя */
+  const r=await fetch(PAY.api,{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({order:num,mode:t.mode,items:cart,
+      customer:{name:f.name.value,phone:f.phone.value}})});
+  const data=await r.json().catch(()=>({}));
+  if(!r.ok||!data.url)throw new Error(data.error||'платёж не создан');
+  location.href=data.url;
+}
+
 form.addEventListener('submit',async e=>{
   e.preventDefault();
   const f=e.target; if(f.company.value)return;
@@ -857,6 +913,15 @@ form.addEventListener('submit',async e=>{
     document.getElementById('form-ok').textContent=`${msg} Номер заказа ${num}. Перезвоним в течение 5 минут.`;
     document.getElementById('form-ok').style.display='block';
     btn.textContent='Заказ принят';
+    if(isOnline()&&t.mode!=='Бронь стола'){
+      btn.textContent='Переходим к оплате…';
+      try{ await payOnline(t,f,num); return; }
+      catch(perr){
+        console.warn('Sora: оплата не запустилась',perr);
+        errEl.textContent='Заказ принят, но онлайн-оплата сейчас недоступна — оплатите при получении, мы перезвоним.';
+        errEl.classList.add('show');
+      }
+    }
     cart=[];save();paint();
   }catch(err){
     console.warn('Sora: не удалось отправить заказ',err);
@@ -868,6 +933,17 @@ form.addEventListener('submit',async e=>{
 });
 
 syncForm();
+
+/* Возврат с платёжной страницы */
+(function(){
+  const paid=new URLSearchParams(location.search).get('paid');
+  if(!paid)return;
+  cart=[];save();paint();
+  const ok=document.getElementById('form-ok');
+  ok.textContent=`Заказ ${paid} оформлен. Подтвердим оплату и перезвоним в течение 5 минут.`;
+  ok.style.display='block';
+  goTo(document.getElementById('order'));
+})();
 
 /* ——— Страховка: если CDN не ответил за 4 с — показываем контент как есть ——— */
 setTimeout(()=>{if(!root.classList.contains('anim'))root.classList.add('fallback');},4000);
