@@ -5,13 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Sora Sushi — 空 суши-кафе и доставка</title>
 <meta name="description" content="Sora Sushi (空 — небо) — суши-кафе и доставка. Свежая рыба, авторские роллы и сеты. Доставка за 60 минут." />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Sora Sushi" />
+<meta property="og:url" content="https://autonoma.uk/sora-sushi/" />
 <meta property="og:title" content="Sora Sushi — суши-кафе и доставка" />
 <meta property="og:description" content="Свежая рыба, авторские роллы и сеты. Доставка за 60 минут." />
-<meta property="og:image" content="assets/hero-bg.jpg" />
+<meta property="og:image" content="https://autonoma.uk/sora-sushi/assets/hero-bg.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="theme-color" content="#12141b" />
+<link rel="canonical" href="https://autonoma.uk/sora-sushi/" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%2315171f'/><circle cx='16' cy='17' r='8' fill='%23e0653b'/></svg>" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://esm.sh" crossorigin />
+<link rel="preload" as="image" href="assets/hero-bg.jpg" />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@400;600&display=swap" rel="stylesheet" />
+<script>document.documentElement.classList.add('js');</script>
 <style>
 :root{
   --sumi:#12141b;--yozora:#1b2030;--ai:#2a3552;--kori:#ece7db;--kori-2:#f6f2e9;
@@ -61,6 +70,7 @@ header.scrolled{background:rgba(18,20,27,.8);backdrop-filter:blur(16px);padding:
 @keyframes pulse{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 
 section{position:relative}
+section[id]{scroll-margin-top:84px}
 .pad{padding:clamp(4.5rem,10vw,8.5rem) 0}
 .section-head{text-align:center;margin-bottom:3.5rem}
 .section-head h2{font-size:clamp(2.4rem,5.5vw,3.9rem);margin-top:.7rem}
@@ -94,6 +104,7 @@ section{position:relative}
 .dish-foot .price small{font-size:.9rem;color:var(--muted)}
 .add{width:38px;height:38px;border-radius:50%;border:1px solid var(--shu);background:none;color:var(--shu);font-size:1.3rem;cursor:pointer;transition:.3s;flex:0 0 auto;line-height:1}
 .add:hover{background:var(--shu);color:#fff;transform:rotate(90deg)}
+.add.added{background:var(--matcha);border-color:var(--matcha);color:#fff;transform:none}
 
 .sets{background:var(--yozora);position:relative;overflow:clip}
 .sets .glow{position:absolute;right:0;top:-20%;width:min(50vw,400px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(224,101,59,.2),transparent 65%);pointer-events:none;will-change:transform}
@@ -144,7 +155,11 @@ footer{background:#0e1018;padding:4rem 0 2rem;border-top:1px solid rgba(236,231,
 .foot-logo{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:600;color:var(--kori);margin-bottom:.8rem}
 .foot-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding-top:2rem;border-top:1px solid rgba(236,231,219,.07);color:var(--muted);font-size:.8rem}
 
-.reveal{opacity:0;transform:translateY(30px)}
+/* Скрываем до анимации только если JS реально работает.
+   .fallback — аварийный режим: CDN не ответил или reduced-motion. */
+.js .reveal{opacity:0;transform:translateY(30px)}
+.js.fallback .reveal{opacity:1!important;transform:none!important}
+body.nav-open{overflow:hidden}
 
 @media(max-width:900px){
   .nav-links{position:fixed;top:0;right:0;height:100%;width:min(78vw,320px);background:var(--yozora);flex-direction:column;justify-content:center;gap:1.8rem;padding:2rem;display:none}
@@ -202,6 +217,7 @@ footer{background:#0e1018;padding:4rem 0 2rem;border-top:1px solid rgba(236,231,
   .deliv-grid{grid-template-columns:1fr;gap:1rem}
   .deliv-item{display:flex;align-items:center;gap:1.2rem;text-align:left;padding:1.2rem 1.4rem}
   .deliv-item .ic{margin:0;flex:0 0 auto;width:52px;height:52px}
+  .deliv-item .dtxt{min-width:0}
   .deliv-item h3{font-size:1.25rem;margin-bottom:.2rem}
 
   /* Заказ / форма */
@@ -213,7 +229,7 @@ footer{background:#0e1018;padding:4rem 0 2rem;border-top:1px solid rgba(236,231,
   header{padding:1rem 0}
   .logo{font-size:1.3rem}
 }
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none}.hero-bg{transform:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}.js .reveal{opacity:1;transform:none}.hero-bg{transform:none}}
 </style>
 </head>
 <body>
@@ -225,7 +241,7 @@ footer{background:#0e1018;padding:4rem 0 2rem;border-top:1px solid rgba(236,231,
       <a href="#philo">О нас</a><a href="#menu">Меню</a><a href="#sets">Сеты</a><a href="#delivery">Доставка</a>
       <a href="#order" class="btn btn-primary magnetic" style="padding:.6rem 1.3rem">Заказать</a>
     </nav>
-    <button class="nav-toggle" id="navtoggle" aria-label="Меню"><span></span><span></span><span></span></button>
+    <button class="nav-toggle" id="navtoggle" aria-label="Меню" aria-expanded="false" aria-controls="navlinks"><span></span><span></span><span></span></button>
   </div>
 </header>
 
@@ -312,10 +328,10 @@ footer{background:#0e1018;padding:4rem 0 2rem;border-top:1px solid rgba(236,231,
   <div class="shell">
     <div class="section-head"><span class="eyebrow reveal">配達 · доставка</span><h2 class="reveal">Привезём тёплым и целым</h2></div>
     <div class="deliv-grid" data-stagger>
-      <div class="deliv-item reveal"><div class="ic">60′</div><h3>За 60 минут</h3><p>По городу. Не успели — ролл в подарок к заказу.</p></div>
-      <div class="deliv-item reveal"><div class="ic">₽0</div><h3>Бесплатно от 1500 ₽</h3><p>Меньше суммы — доставка 200 ₽ по зоне.</p></div>
-      <div class="deliv-item reveal"><div class="ic">❄</div><h3>Термосумки</h3><p>Отдельно горячее и холодное. Рыба не «плывёт».</p></div>
-      <div class="deliv-item reveal"><div class="ic">✳</div><h3>Каждый 5-й — приз</h3><p>Копите заказы в приложении: сет или напиток бесплатно.</p></div>
+      <div class="deliv-item reveal"><div class="ic">60′</div><div class="dtxt"><h3>За 60 минут</h3><p>По городу. Не успели — ролл в подарок к заказу.</p></div></div>
+      <div class="deliv-item reveal"><div class="ic">₽0</div><div class="dtxt"><h3>Бесплатно от 1500 ₽</h3><p>Меньше суммы — доставка 200 ₽ по зоне.</p></div></div>
+      <div class="deliv-item reveal"><div class="ic">❄</div><div class="dtxt"><h3>Термосумки</h3><p>Отдельно горячее и холодное. Рыба не «плывёт».</p></div></div>
+      <div class="deliv-item reveal"><div class="ic">✳</div><div class="dtxt"><h3>Каждый 5-й — приз</h3><p>Копите заказы в приложении: сет или напиток бесплатно.</p></div></div>
     </div>
   </div>
 </section>
@@ -332,10 +348,10 @@ footer{background:#0e1018;padding:4rem 0 2rem;border-top:1px solid rgba(236,231,
       <div class="contact-line reveal"><span class="k">Соцсети</span><span class="v"><a href="#">Telegram</a> · <a href="#">Instagram</a></span></div>
     </div>
     <form id="order-form" class="reveal">
-      <div class="field"><label>Как вас зовут</label><input type="text" name="name" required placeholder="Имя" /></div>
-      <div class="field"><label>Телефон</label><input type="tel" name="phone" required placeholder="+7 ___ ___-__-__" /></div>
-      <div class="field"><label>Что нужно</label><select name="type"><option>Доставка</option><option>Самовывоз</option><option>Бронь стола</option></select></div>
-      <div class="field"><label>Комментарий</label><textarea name="note" placeholder="Что заказать, на какое время, сколько гостей"></textarea></div>
+      <div class="field"><label for="f-name">Как вас зовут</label><input id="f-name" type="text" name="name" required placeholder="Имя" autocomplete="name" /></div>
+      <div class="field"><label for="f-phone">Телефон</label><input id="f-phone" type="tel" name="phone" required placeholder="+7 ___ ___-__-__" autocomplete="tel" inputmode="tel" /></div>
+      <div class="field"><label for="f-type">Что нужно</label><select id="f-type" name="type"><option>Доставка</option><option>Самовывоз</option><option>Бронь стола</option></select></div>
+      <div class="field"><label for="f-note">Комментарий</label><textarea id="f-note" name="note" placeholder="Что заказать, на какое время, сколько гостей"></textarea></div>
       <input type="text" name="company" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
       <button type="submit" class="btn btn-primary">Отправить заявку</button>
       <p class="form-note">Нажимая, вы соглашаетесь на обработку данных для ответа на заявку.</p>
@@ -355,14 +371,12 @@ footer{background:#0e1018;padding:4rem 0 2rem;border-top:1px solid rgba(236,231,
   </div>
 </footer>
 
-<script type="module">
-import * as THREE from 'https://esm.sh/three@0.160.0';
-import {gsap} from 'https://esm.sh/gsap@3.12.5';
-import ScrollTrigger from 'https://esm.sh/gsap@3.12.5/ScrollTrigger';
-import Lenis from 'https://esm.sh/lenis@1.1.13';
-gsap.registerPlugin(ScrollTrigger);
+<!-- ——— Базовый слой: работает без внешних библиотек ——— -->
+<script>
+(function(){
 const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
-const coarse = matchMedia('(pointer:coarse)').matches;
+const root = document.documentElement;
+if(reduce) root.classList.add('fallback');
 
 /* ——— Меню ——— */
 const MENU=[
@@ -385,63 +399,139 @@ const MENU=[
 ];
 const glyphs=['寿','鮨','海','空','魚','米','箸','茶'];
 const dishesEl=document.getElementById('dishes');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function render(cat){
   const list=cat==='all'?MENU:MENU.filter(d=>d.cat===cat);
   dishesEl.innerHTML=list.map((d,i)=>`
    <article class="dish tilt">
-     <div class="dish-img"><div class="ph jp">${glyphs[i%glyphs.length]}</div>${d.tag?`<span class="dish-tag">${d.tag}</span>`:''}</div>
-     <div class="dish-body"><h3>${d.name}</h3><p class="desc">${d.desc}</p>
-       <div class="dish-foot"><span class="price">${d.price} <small>₽</small></span><button class="add" aria-label="Добавить">+</button></div>
+     <div class="dish-img"><div class="ph jp" aria-hidden="true">${glyphs[i%glyphs.length]}</div>${d.tag?`<span class="dish-tag">${esc(d.tag)}</span>`:''}</div>
+     <div class="dish-body"><h3>${esc(d.name)}</h3><p class="desc">${esc(d.desc)}</p>
+       <div class="dish-foot"><span class="price">${d.price} <small>₽</small></span><button class="add" type="button" aria-label="Добавить «${esc(d.name)}» к заказу">+</button></div>
      </div></article>`).join('');
-  bindTilt();
-  gsap.fromTo('.dish',{y:24,opacity:0},{y:0,opacity:1,duration:.6,stagger:.05,ease:'power3.out'});
-}
-/* ——— 3D-наклон карточек ——— */
-function bindTilt(){
-  if(coarse||reduce)return;
-  document.querySelectorAll('.tilt').forEach(card=>{
-    card.addEventListener('pointermove',e=>{
-      const r=card.getBoundingClientRect();
-      const px=(e.clientX-r.left)/r.width-.5, py=(e.clientY-r.top)/r.height-.5;
-      gsap.to(card,{rotateY:px*9,rotateX:-py*9,duration:.4,ease:'power2.out',transformPerspective:900});
-    });
-    card.addEventListener('pointerleave',()=>gsap.to(card,{rotateY:0,rotateX:0,duration:.6,ease:'elastic.out(1,.5)'}));
-  });
+  /* Слой анимаций (если загрузился) подхватит новые карточки */
+  document.dispatchEvent(new CustomEvent('sora:dishes'));
 }
 render('all');
 document.querySelectorAll('.menu-tab').forEach(t=>t.addEventListener('click',()=>{
-  document.querySelector('.menu-tab.active').classList.remove('active');t.classList.add('active');render(t.dataset.cat);
+  const a=document.querySelector('.menu-tab.active'); if(a)a.classList.remove('active');
+  t.classList.add('active');render(t.dataset.cat);
 }));
+
+/* ——— Плавный переход по якорям (Lenis перехватит, если загрузится) ——— */
+function goTo(el){
+  if(!el)return;
+  if(window.__lenis){window.__lenis.scrollTo(el,{offset:-70,duration:1.3});return;}
+  el.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+}
+function goTop(){
+  if(window.__lenis){window.__lenis.scrollTo(0,{duration:1.1});return;}
+  scrollTo({top:0,behavior:reduce?'auto':'smooth'});
+}
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  const href=a.getAttribute('href');
+  a.addEventListener('click',e=>{
+    /* href="#" — не селектор: querySelector('#') бросает SyntaxError */
+    if(href.length<2){e.preventDefault();goTop();return;}
+    let t=null;try{t=document.querySelector(href);}catch(_){}
+    if(t){e.preventDefault();goTo(t);}
+  });
+});
+
+/* ——— «+» кладёт позицию в комментарий к заказу ——— */
+const noteEl=document.getElementById('f-note');
+dishesEl.addEventListener('click',e=>{
+  const b=e.target.closest('.add'); if(!b)return;
+  const name=b.closest('.dish').querySelector('h3').textContent;
+  if(noteEl){const v=noteEl.value.trim();noteEl.value=v?v+', '+name:name;}
+  b.classList.add('added');b.textContent='✓';
+  setTimeout(()=>{b.classList.remove('added');b.textContent='+';},1500);
+  goTo(document.getElementById('order'));
+});
 
 /* ——— Шапка / моб.меню ——— */
 const hdr=document.getElementById('hdr');
 addEventListener('scroll',()=>hdr.classList.toggle('scrolled',scrollY>40),{passive:true});
 const toggle=document.getElementById('navtoggle'),links=document.getElementById('navlinks');
-toggle.addEventListener('click',()=>links.classList.toggle('open'));
-links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+function setNav(open){
+  links.classList.toggle('open',open);
+  toggle.setAttribute('aria-expanded',String(open));
+  document.body.classList.toggle('nav-open',open);
+}
+toggle.addEventListener('click',()=>setNav(!links.classList.contains('open')));
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setNav(false)));
+addEventListener('keydown',e=>{if(e.key==='Escape')setNav(false);});
+addEventListener('click',e=>{
+  if(links.classList.contains('open')&&!links.contains(e.target)&&!toggle.contains(e.target))setNav(false);
+});
 
 /* ——— Форма ——— */
 document.getElementById('order-form').addEventListener('submit',e=>{
   e.preventDefault();const f=e.target;if(f.company.value)return;if(!f.reportValidity())return;
   document.getElementById('form-ok').style.display='block';
-  const b=f.querySelector('button');b.textContent='Отправлено';b.disabled=true;
+  const b=f.querySelector('button[type=submit]');b.textContent='Отправлено';b.disabled=true;
   // ЗАМЕНИТЬ: подключить Telegram-бота / web3forms для реальной доставки заявок
 });
 
-if(reduce){
-  document.querySelectorAll('.reveal').forEach(el=>{el.style.opacity=1;el.style.transform='none';});
-}else{
+/* ——— Страховка: если CDN не ответил за 4 с — показываем контент как есть ——— */
+setTimeout(()=>{if(!root.classList.contains('anim'))root.classList.add('fallback');},4000);
+})();
+</script>
+
+<!-- ——— Слой анимаций: GSAP + Lenis + three.js. Падение CDN сайт не ломает ——— -->
+<script type="module">
+(async()=>{
+const root=document.documentElement;
+const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+const coarse = matchMedia('(pointer:coarse)').matches;
+if(reduce)return;
+
+let THREE,gsap,ScrollTrigger,Lenis;
+try{
+  [THREE,gsap,ScrollTrigger,Lenis]=await Promise.all([
+    import('https://esm.sh/three@0.160.0'),
+    import('https://esm.sh/gsap@3.12.5').then(m=>m.gsap),
+    import('https://esm.sh/gsap@3.12.5/ScrollTrigger').then(m=>m.default||m.ScrollTrigger),
+    import('https://esm.sh/lenis@1.1.13').then(m=>m.default||m.Lenis),
+  ]);
+}catch(err){
+  console.warn('Sora: библиотеки анимации не загрузились, включён простой режим.',err);
+  root.classList.add('fallback');
+  return;
+}
+gsap.registerPlugin(ScrollTrigger);
+
+{
+  /* ——— 3D-наклон карточек ——— */
+  const bindTilt=()=>{
+    if(coarse)return;
+    document.querySelectorAll('.tilt').forEach(card=>{
+      card.addEventListener('pointermove',e=>{
+        const r=card.getBoundingClientRect();
+        const px=(e.clientX-r.left)/r.width-.5, py=(e.clientY-r.top)/r.height-.5;
+        gsap.to(card,{rotateY:px*9,rotateX:-py*9,duration:.4,ease:'power2.out',transformPerspective:900});
+      });
+      card.addEventListener('pointerleave',()=>gsap.to(card,{rotateY:0,rotateX:0,duration:.6,ease:'elastic.out(1,.5)'}));
+    });
+  };
+  const animateDishes=()=>{
+    bindTilt();
+    gsap.fromTo('.dish',{y:24,opacity:0},{y:0,opacity:1,duration:.6,stagger:.05,ease:'power3.out'});
+  };
+  document.addEventListener('sora:dishes',animateDishes);
+  animateDishes();
+
   /* ——— Инерционный скролл ——— */
   const lenis=new Lenis({duration:1.1,smoothWheel:true});
+  window.__lenis=lenis;
   lenis.on('scroll',ScrollTrigger.update);
   gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0);
-  document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
-    const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();lenis.scrollTo(t,{offset:-70,duration:1.3});}
-  }));
 
-  /* ——— Появление секций ——— */
-  gsap.utils.toArray('.reveal').forEach(el=>gsap.fromTo(el,{y:30,opacity:0},{y:0,opacity:1,duration:.9,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%',once:true}}));
+  /* ——— Появление секций (без двойных твинов внутри data-stagger) ——— */
+  gsap.utils.toArray('.reveal')
+    .filter(el=>!el.parentElement.hasAttribute('data-stagger'))
+    .forEach(el=>gsap.fromTo(el,{y:30,opacity:0},{y:0,opacity:1,duration:.9,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%',once:true}}));
   gsap.utils.toArray('[data-stagger]').forEach(g=>gsap.fromTo(g.children,{y:30,opacity:0},{y:0,opacity:1,duration:.7,stagger:.09,ease:'power3.out',scrollTrigger:{trigger:g,start:'top 84%',once:true}}));
+  root.classList.add('anim');
 
   /* ——— Герой: текст ——— */
   const tl=gsap.timeline({delay:.2});
@@ -460,7 +550,8 @@ if(reduce){
     el.addEventListener('pointerleave',()=>gsap.to(el,{x:0,y:0,duration:.6,ease:'elastic.out(1,.4)'}));
   });
 
-  /* ——— 3D частицы в герое (three.js) ——— */
+  /* ——— 3D частицы в герое (three.js). Нет WebGL — просто без частиц ——— */
+  try{
   const canvas=document.getElementById('hero-canvas');
   const scene=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(60,1,.1,100);cam.position.z=6;
@@ -495,7 +586,7 @@ if(reduce){
   }
   requestAnimationFrame(resize);addEventListener('resize',resize,{passive:true});
   const mouse={x:99,y:99,tx:99,ty:99};
-  if(!coarse)addEventListener('pointermove',e=>{const r=canvas.getBoundingClientRect();if(e.clientY<r.height){mouse.tx=((e.clientX-r.left)/r.width-.5)*(cam.aspect*6.5);mouse.ty=-((e.clientY-r.top)/r.height-.5)*6.5;}});
+  if(!coarse)addEventListener('pointermove',e=>{const r=canvas.getBoundingClientRect();if(e.clientY>=r.top&&e.clientY<=r.bottom){mouse.tx=((e.clientX-r.left)/r.width-.5)*(cam.aspect*6.5);mouse.ty=-((e.clientY-r.top)/r.height-.5)*6.5;}});
   let run=true;new IntersectionObserver(es=>es.forEach(e=>run=e.isIntersecting)).observe(document.querySelector('.hero'));
   let last=performance.now();
   function loop(now){requestAnimationFrame(loop);if(!run){last=now;return;}
@@ -503,7 +594,9 @@ if(reduce){
     mouse.x+=(mouse.tx-mouse.x)*dt*6;mouse.y+=(mouse.ty-mouse.y)*dt*6;uni.uMouse.value.set(mouse.x,mouse.y);
     pts.rotation.y+=dt*.02;rnd.render(scene,cam);}
   requestAnimationFrame(loop);
+  }catch(err){console.warn('Sora: частицы отключены (нет WebGL).',err);}
 }
+})();
 </script>
 </body>
 </html>
