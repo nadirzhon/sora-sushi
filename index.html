@@ -538,7 +538,7 @@ window.SORA_SEND=SEND;
      'yoomoney' — форма ЮMoney (Россия, физлица), сумма тоже проверяемая вручную */
 const PAY={
   mode:'auto',
-  api:'/api/pay',
+  api:'api/pay',        // относительный: верно и в корне домена, и в подпапке
   link:'',                 // напр. 'https://pay.example.kg/?amount={sum}&order={order}'
   yoomoneyWallet:'',
   label:'Онлайн-картой'
