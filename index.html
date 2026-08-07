@@ -14,7 +14,7 @@
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="theme-color" content="#12141b" />
 <link rel="canonical" href="https://autonoma.uk/sora-sushi/" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20fill='%2315171f'/%3E%3Ccircle%20cx='16'%20cy='17'%20r='8'%20fill='%23e0653b'/%3E%3C/svg%3E" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22%3E%3Cdefs%3E%3Cmask%20id=%22s%22%3E%3Crect%20width=%22100%22%20height=%22100%22%20fill=%22%23000%22/%3E%3Cpath%20fill=%22%23fff%22%20d=%22M24%2C10%20H74%20A16%2C16%200%200%201%2090%2C26%20V76%20A14%2C14%200%200%201%2076%2C90%20H24%20A12%2C12%200%200%201%2012%2C78%20V22%20A12%2C12%200%200%201%2024%2C10%20Z%22/%3E%3Ccircle%20cx=%2246%22%20cy=%2252%22%20r=%2222%22%20fill=%22%23000%22/%3E%3Ccircle%20cx=%2259%22%20cy=%2241%22%20r=%2219%22%20fill=%22%23fff%22/%3E%3C/mask%3E%3C/defs%3E%3Crect%20width=%22100%22%20height=%22100%22%20fill=%22%23e0653b%22%20mask=%22url%28%23s%29%22/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://esm.sh" crossorigin />
@@ -46,7 +46,11 @@ header{position:fixed;inset:0 0 auto;z-index:50;transition:background .5s var(--
 header.scrolled{background:rgba(18,20,27,.8);backdrop-filter:blur(16px);padding:.8rem 0;border-bottom:1px solid rgba(236,231,219,.08)}
 .nav{display:flex;align-items:center;justify-content:space-between}
 .logo{display:flex;align-items:center;gap:.7rem;font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600}
-.logo .mark{width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 40% 35%,var(--shu-soft),var(--shu) 70%);box-shadow:0 0 26px rgba(224,101,59,.55);flex:0 0 auto}
+.logo .mark{width:34px;height:34px;flex:0 0 auto;display:block;color:var(--shu);filter:drop-shadow(0 0 16px rgba(224,101,59,.45));transition:color .35s var(--ease)}
+.logo .mark svg{width:100%;height:100%;display:block}
+.logo:hover .mark{color:var(--shu-soft)}
+.foot-logo .mark{width:26px;height:26px;display:inline-block;vertical-align:-.25em;margin-right:.5rem;color:var(--shu)}
+.foot-logo .mark svg{width:100%;height:100%;display:block}
 .nav-links{display:flex;gap:2.2rem;align-items:center}
 .nav-links a{font-size:.9rem;color:var(--muted);transition:color .3s}
 .nav-links a:hover{color:var(--kori)}
@@ -328,7 +332,7 @@ body.nav-open{overflow:hidden}
 
 <header id="hdr">
   <div class="shell nav">
-    <a href="#" class="logo"><span class="mark"></span>Sora <span class="jp" style="font-size:1.1rem;color:var(--muted)">空</span></a>
+    <a href="#" class="logo"><span class="mark" aria-hidden="true"><svg viewBox="0 0 100 100"><defs><mask id="soraSeal"><rect width="100" height="100" fill="#000"/><path fill="#fff" d="M24,10 H74 A16,16 0 0 1 90,26 V76 A14,14 0 0 1 76,90 H24 A12,12 0 0 1 12,78 V22 A12,12 0 0 1 24,10 Z"/><circle cx="46" cy="52" r="22" fill="#000"/><circle cx="59" cy="41" r="19" fill="#fff"/></mask></defs><rect width="100" height="100" fill="currentColor" mask="url(#soraSeal)"/></svg></span>Sora <span class="jp" style="font-size:1.1rem;color:var(--muted)">空</span></a>
     <nav class="nav-links" id="navlinks">
       <a href="#philo">О нас</a><a href="#menu">Меню</a><a href="#sets">Сеты</a><a href="#delivery">Доставка</a>
       <a href="#order" class="btn btn-primary magnetic" style="padding:.6rem 1.3rem">Заказать</a>
@@ -488,7 +492,7 @@ body.nav-open{overflow:hidden}
 <footer>
   <div class="shell">
     <div class="foot-grid">
-      <div><div class="foot-logo">Sora <span class="jp">空</span> Sushi</div><p>Суши-кафе и доставка. Свежая рыба, ручная лепка, небо в каждом кусочке.</p></div>
+      <div><div class="foot-logo"><span class="mark" aria-hidden="true"><svg viewBox="0 0 100 100"><defs><mask id="soraSealFoot"><rect width="100" height="100" fill="#000"/><path fill="#fff" d="M24,10 H74 A16,16 0 0 1 90,26 V76 A14,14 0 0 1 76,90 H24 A12,12 0 0 1 12,78 V22 A12,12 0 0 1 24,10 Z"/><circle cx="46" cy="52" r="22" fill="#000"/><circle cx="59" cy="41" r="19" fill="#fff"/></mask></defs><rect width="100" height="100" fill="currentColor" mask="url(#soraSealFoot)"/></svg></span>Sora <span class="jp">空</span> Sushi</div><p>Суши-кафе и доставка. Свежая рыба, ручная лепка, небо в каждом кусочке.</p></div>
       <div><h4>Разделы</h4><a href="#philo">О нас</a><a href="#menu">Меню</a><a href="#sets">Сеты</a><a href="#delivery">Доставка</a></div>
       <div><h4>Контакты</h4><a href="tel:+996700000000">+996 700 000-000</a><p>ул. Примерная, 1</p><p>11:00 — 23:00</p></div>
     </div>
