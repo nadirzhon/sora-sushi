@@ -29,6 +29,18 @@ export function fpSign(script, params, secret) {
   return md5([script, ...values, secret].join(';'));
 }
 
+/* GET /api/pay — сайт спрашивает, настроена ли оплата, и только тогда
+   показывает способ «Онлайн-картой». Ключи наружу не отдаём. */
+export function onRequestGet({ env }) {
+  const provider = (env.PAY_PROVIDER || 'freedompay').toLowerCase();
+  const ready = {
+    freedompay: !!(env.FREEDOMPAY_MERCHANT_ID && env.FREEDOMPAY_SECRET),
+    yookassa: !!(env.YOOKASSA_SHOP_ID && env.YOOKASSA_SECRET),
+    link: !!env.PAY_LINK,
+  }[provider] || false;
+  return json({ enabled: ready, provider, test: env.FREEDOMPAY_TEST === '1' });
+}
+
 export async function onRequestPost({ request, env }) {
   let body;
   try { body = await request.json(); } catch { return json({ error: 'Некорректный запрос' }, 400); }

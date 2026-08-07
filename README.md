@@ -48,17 +48,35 @@ const SEND={
 
 ## Онлайн-оплата
 
-В `index.html` поставьте `PAY.mode='api'`. Дальше — сервер.
+Ничего включать вручную не нужно: сайт сам спрашивает у `/api/pay`, подключён ли
+провайдер (`PAY.mode='auto'`), и показывает способ «Онлайн-картой» только тогда.
+Нет функций или нет ключей — способ просто не появляется, оплата при получении
+работает как обычно.
 
-Функции написаны под **Cloudflare Pages** (бесплатно, деплой с этого же репозитория).
-На GitHub Pages они работать не будут: там только статика.
+Функции написаны под **Cloudflare Pages**. На GitHub Pages они не работают:
+там только статика, поэтому там оплата не появится.
 
-### Развернуть
+### Развернуть на Cloudflare Pages
 
-1. dash.cloudflare.com → Workers & Pages → Create → Pages → Connect to Git → `sora-sushi`
-2. Framework preset: **None**, build command пустой, output directory: `/`
-3. Settings → Environment variables → добавить переменные провайдера (ниже)
-4. Свой домен — Custom domains, бесплатно
+Вариант через дашборд (рекомендую — деплой будет автоматом на каждый пуш):
+
+1. dash.cloudflare.com → Workers & Pages → Create → Pages → Connect to Git
+2. выбрать репозиторий `sora-sushi`, ветка `main`
+3. Framework preset: **None**, build command оставить пустым,
+   build output directory: `/`
+4. Settings → Variables and Secrets → добавить переменные провайдера (ниже).
+   Ключи добавляйте типом **Secret**, а не Plain text
+5. свой домен — Custom domains, бесплатно
+
+Вариант из терминала:
+
+```
+npx wrangler login
+npx wrangler pages deploy
+```
+
+Настройки проекта лежат в `wrangler.toml`, HTTP-заголовки и политика
+безопасности — в `_headers`.
 
 ### Freedom Pay — Кыргызстан
 
@@ -69,7 +87,7 @@ Visa, Mastercard, **Элкарт**, **О!Деньги**, **Balance.kg**, **MegaP
 ```
 PAY_PROVIDER          = freedompay
 FREEDOMPAY_MERCHANT_ID= ваш merchant id
-FREEDOMPAY_SECRET     = секретный ключ из личного кабинета
+FREEDOMPAY_SECRET     = секретный ключ из личного кабинета   ← Secret
 PAY_CURRENCY          = KGS
 FREEDOMPAY_TEST       = 1   ← только на время тестов, потом убрать
 ```
@@ -86,7 +104,7 @@ FREEDOMPAY_TEST       = 1   ← только на время тестов, по�
 ```
 PAY_PROVIDER    = yookassa
 YOOKASSA_SHOP_ID= ...
-YOOKASSA_SECRET = ...
+YOOKASSA_SECRET = ...        ← Secret
 PAY_CURRENCY    = RUB
 ```
 
@@ -108,9 +126,19 @@ PAY_LINK     = https://pay.example.kg/?amount={sum}&order={order}
 Необязательно, работает с любым провайдером:
 
 ```
-TELEGRAM_TOKEN = токен бота
+TELEGRAM_TOKEN = токен бота     ← Secret
 TELEGRAM_CHAT  = chat_id
 ```
+
+### Проверить локально
+
+```
+npx wrangler pages dev . --binding PAY_PROVIDER=freedompay FREEDOMPAY_MERCHANT_ID=... FREEDOMPAY_SECRET=...
+```
+
+Полезные проверки: `GET /api/pay` отвечает `{"enabled":true}`,
+`POST /api/pay` с пустой корзиной — «Корзина пуста», с одной позицией на 390 —
+«Минимальный заказ на доставку — 700 сом».
 
 ## Что осталось заполнить
 

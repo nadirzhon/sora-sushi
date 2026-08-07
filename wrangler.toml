@@ -1,0 +1,6 @@
+name = "sora-sushi"
+compatibility_date = "2026-08-07"
+
+# Сайт статический, собирать нечего — отдаём корень репозитория как есть.
+# Папка functions/ подхватывается Pages автоматически: functions/api/pay.js → /api/pay
+pages_build_output_dir = "."

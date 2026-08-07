@@ -522,7 +522,10 @@ window.SORA_SEND=SEND;
 
 /* ═══ ОНЛАЙН-ОПЛАТА ═══
    mode:
-     'none' — только оплата при получении (по умолчанию)
+     'auto' — по умолчанию: сайт сам спрашивает у /api/pay, настроена ли оплата,
+              и показывает «Онлайн-картой» только если провайдер подключён.
+              На GitHub Pages функций нет — способ просто не появится.
+     'none' — принудительно только оплата при получении
      'api'  — рабочий способ: функция /api/pay создаёт платёж у провайдера
               и возвращает ссылку. Ключи лежат на сервере, сумму сервер
               пересчитывает сам. Готовый код — в functions/api/, подробности
@@ -534,7 +537,7 @@ window.SORA_SEND=SEND;
               в такой ссылке клиент может подменить — сверяйте перед выдачей.
      'yoomoney' — форма ЮMoney (Россия, физлица), сумма тоже проверяемая вручную */
 const PAY={
-  mode:'none',
+  mode:'auto',
   api:'/api/pay',
   link:'',                 // напр. 'https://pay.example.kg/?amount={sum}&order={order}'
   yoomoneyWallet:'',
@@ -793,11 +796,20 @@ const form=document.getElementById('order-form'), errEl=document.getElementById(
 
 /* Онлайн-оплата появляется в списке, только если она настроена */
 const paySel=document.getElementById('f-pay');
-if(PAY.mode!=='none'){
+let onlineOn=false;
+function enableOnline(){
+  if(onlineOn)return; onlineOn=true;
   const o=document.createElement('option');o.textContent=PAY.label;
   paySel.insertBefore(o,paySel.firstChild);paySel.value=PAY.label;
 }
-const isOnline=()=>PAY.mode!=='none'&&paySel.value===PAY.label;
+if(PAY.mode==='auto'){
+  /* спрашиваем сервер: подключён ли провайдер. Нет функции — нет и способа */
+  fetch(PAY.api,{method:'GET'})
+    .then(r=>r.ok?r.json():null)
+    .then(d=>{if(d&&d.enabled){PAY.mode='api';enableOnline();}})
+    .catch(()=>{});
+}else if(PAY.mode!=='none')enableOnline();
+const isOnline=()=>onlineOn&&paySel.value===PAY.label;
 
 function syncForm(){
   const mode=typeEl.value, delivery=mode==='Доставка';
