@@ -192,7 +192,10 @@ footer{background:#0e1018;padding:4rem 0 2rem;border-top:1px solid rgba(236,231,
 .qty button:hover{background:var(--shu);color:#fff}
 .qty .n{min-width:26px;text-align:center;font-size:.9rem;font-variant-numeric:tabular-nums}
 .cart-row .ln{grid-column:1;font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:600;
-  font-variant-numeric:tabular-nums}
+  font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:.2rem}
+.row-del{background:none;border:0;color:var(--muted);font-size:1.3rem;line-height:1;cursor:pointer;
+  padding:.25rem .45rem;border-radius:8px;transition:color .25s,background .25s}
+.row-del:hover{color:var(--kori);background:rgba(236,231,219,.08)}
 .cart-row.gift{opacity:.95}
 .cart-row.gift .nm{color:var(--matcha)}
 
@@ -227,11 +230,21 @@ footer{background:#0e1018;padding:4rem 0 2rem;border-top:1px solid rgba(236,231,
 .form-err.show{display:block}
 
 @media(max-width:600px){
-  .cart-fab{right:1rem;bottom:1rem;padding:.75rem 1.1rem}
+  /* нижняя кромка iPhone занята системной полосой — не прячем под неё кнопки */
+  .cart-fab{right:1rem;bottom:calc(1rem + env(safe-area-inset-bottom));padding:.75rem 1.1rem}
   .cart-head{padding:1.1rem 1.2rem}
   .cart-body{padding:.2rem 1.2rem}
-  .cart-foot{padding:1rem 1.2rem 1.3rem}
+  .cart-foot{padding:1rem 1.2rem calc(1.3rem + env(safe-area-inset-bottom))}
   .field-row,.field-row.thirds{grid-template-columns:1fr}
+
+  /* Safari на iOS увеличивает страницу при фокусе, если шрифт поля меньше 16px */
+  .field input,.field select,.field textarea{font-size:16px}
+
+  /* пальцем в 32 пикселя попадать неудобно */
+  .qty button{width:42px;height:42px;font-size:1.25rem}
+  .qty .n{min-width:30px}
+  .row-del{font-size:1.6rem;padding:.4rem .6rem}
+  .menu-tab{padding:.6rem 1.2rem}
 }
 
 /* Скрываем до анимации только если JS реально работает.
@@ -719,7 +732,7 @@ function paint(){
           <span class="n">${r.qty}</span>
           <button type="button" data-inc="${r.id}" aria-label="Добавить одну">+</button>
         </div>
-        <div class="ln">${rub(r.price*r.qty)} <button type="button" class="cart-close" style="font-size:1.15rem;vertical-align:middle;margin-left:.4rem" data-del="${r.id}" aria-label="Удалить ${esc(r.name)} из корзины">&times;</button></div>
+        <div class="ln">${rub(r.price*r.qty)} <button type="button" class="row-del" data-del="${r.id}" aria-label="Удалить ${esc(r.name)} из корзины">&times;</button></div>
       </div>`).join('')
       + (t.gift?`<div class="cart-row gift"><div class="nm">${esc(t.gift.name)}</div><div class="un">подарок за ${PROMO.giftFromItems}+ позиции</div><div class="ln">0 сом</div></div>`:'')
       + bonusHTML(t)
